@@ -1,5 +1,5 @@
 export const state = () => ({
-    user: null
+    user: null,
 });
 
 export const mutations = {
@@ -9,5 +9,9 @@ export const mutations = {
     logout(state) {
         state.user = null;
         state.token = null;
-    }
+    },
+};
+
+export const actions = {
+    
 };

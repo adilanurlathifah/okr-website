@@ -20,6 +20,9 @@ export default {
   css: ['~/assets/css/main.css'],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~plugins/v-calendar.js', ssr: false },
+    { src: '~/plugins/vue-tailwind.client.js'},
+    { src: '~/plugins/vue-sweetalert2.js'}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -27,13 +30,21 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/google-fonts'
   ],
 
+  googleFonts: {
+    families: {
+      Roboto: true,
+      Montserrat: '200..800'
+    }
+  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    'vue-sweetalert2/nuxt'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

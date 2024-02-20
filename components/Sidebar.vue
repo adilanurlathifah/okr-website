@@ -1,9 +1,10 @@
 <template>
     <div>
-        <nav id="sidebar" class="w-64 fixed z-20 inset-y-0 left-0 bg-[#191F2F] shadow-sm" >
+        <transition name="slide">
+            <nav v-if="showSidebar" id="sidebar" class="font-display w-64 fixed z-20 inset-y-0 left-0 bg-[#191F2F] shadow-sm" >
             <ul class="relative pt-24 list-none px-[0.2rem] space-y-3">
                 <li class="relative">
-                    <nuxt-link to="/" class="flex h-12 items-center px-6 py-4 transition duration-300 ease-linear hover:bg-[#484D59]">
+                    <nuxt-link to="/admin/" class="flex h-12 items-center px-6 py-4 transition duration-300 ease-linear hover:bg-[#484D59]">
                         <svg 
                             width="26"
                             height="26"
@@ -14,67 +15,6 @@
                             <path d="M14.0833 9.75V3.25H22.75V9.75H14.0833ZM3.25 14.0833V3.25H11.9167V14.0833H3.25ZM14.0833 22.75V11.9167H22.75V22.75H14.0833ZM3.25 22.75V16.25H11.9167V22.75H3.25Z" fill="white"/>
                         </svg>
                         <p class="ml-2 text-white font-medium">Dashboard</p>
-                    </nuxt-link>
-                </li>
-                <li class="relative">
-                    <nuxt-link to="/" class="flex h-12 items-center px-6 py-4 transition duration-300 ease-linear hover:bg-[#484D59]">
-                        <svg 
-                            width="26" 
-                            height="22" 
-                            viewBox="0 0 18 20" 
-                            fill="none" 
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M0 20V6H4V20H0ZM7 20V0H11V20H7ZM14 20V12H18V20H14Z" fill="white"/>
-                        </svg>
-                        <p class="ml-2 text-white font-medium">Performa & Efisiensi</p>
-                    </nuxt-link>
-                </li>
-                <li class="relative">
-                    <nuxt-link to="/" class="flex h-12 items-center px-6 py-4 transition duration-300 ease-linear hover:bg-[#484D59]">
-                        <svg 
-                            width="26" 
-                            height="23" 
-                            viewBox="0 0 24 24" 
-                            fill="none" 
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.7182 5.97997C10.8236 6.56183 9.14037 7.68491 7.87569 9.21102C6.92665 9.12114 6.02872 8.73958 5.30526 8.11874C4.5818 7.49791 4.06832 6.66827 3.83535 5.74381C3.60238 4.81934 3.66137 3.84542 4.00419 2.95583C4.34702 2.06624 4.95687 1.30465 5.74996 0.775671C6.54305 0.246697 7.48047 -0.0236999 8.43342 0.00163014C9.38637 0.0269602 10.3081 0.346774 11.072 0.917134C11.8358 1.48749 12.4044 2.28041 12.6995 3.18696C12.9946 4.0935 13.0017 5.06918 12.72 5.97997M2.76923 11.0758H6.64615C5.93723 12.4605 5.53846 14.0299 5.53846 15.6916C5.53514 18.0134 6.33038 20.2657 7.79077 22.0706C2.86892 21.489 0 17.9626 0 14.7684V14.3068C0 12.839 1.24062 11.0758 2.76923 11.0758ZM24 15.6916C24 16.7827 23.7851 17.8631 23.3676 18.8711C22.9501 19.8791 22.3382 20.795 21.5667 21.5665C20.7953 22.338 19.8795 22.95 18.8715 23.3676C17.8636 23.7851 16.7833 24 15.6923 24C14.6013 24 13.521 23.7851 12.5131 23.3676C11.5052 22.95 10.5893 22.338 9.81788 21.5665C9.04644 20.795 8.4345 19.8791 8.017 18.8711C7.5995 17.8631 7.38462 16.7827 7.38462 15.6916C7.38462 13.4881 8.25989 11.3748 9.81788 9.81665C11.3759 8.25851 13.489 7.38317 15.6923 7.38317C17.8956 7.38317 20.0087 8.25851 21.5667 9.81665C23.1247 11.3748 24 13.4881 24 15.6916ZM20.0382 12.2685C19.9524 12.1825 19.8505 12.1143 19.7384 12.0678C19.6263 12.0213 19.506 11.9973 19.3846 11.9973C19.2632 11.9973 19.143 12.0213 19.0308 12.0678C18.9187 12.1143 18.8168 12.1825 18.7311 12.2685L13.8462 17.1557L12.6535 15.9611C12.5677 15.8753 12.4658 15.8072 12.3537 15.7608C12.2416 15.7143 12.1214 15.6904 12 15.6904C11.8786 15.6904 11.7584 15.7143 11.6463 15.7608C11.5342 15.8072 11.4323 15.8753 11.3465 15.9611C11.2606 16.047 11.1926 16.1489 11.1461 16.261C11.0997 16.3732 11.0758 16.4934 11.0758 16.6147C11.0758 16.7361 11.0997 16.8563 11.1461 16.9685C11.1926 17.0806 11.2606 17.1825 11.3465 17.2683L13.1926 19.1147C13.2784 19.2006 13.3802 19.2688 13.4924 19.3154C13.6045 19.3619 13.7247 19.3859 13.8462 19.3859C13.9676 19.3859 14.0878 19.3619 14.1999 19.3154C14.3121 19.2688 14.4139 19.2006 14.4997 19.1147L20.0382 13.5757C20.1241 13.49 20.1923 13.3881 20.2389 13.2759C20.2854 13.1638 20.3093 13.0435 20.3093 12.9221C20.3093 12.8007 20.2854 12.6805 20.2389 12.5683C20.1923 12.4561 20.1241 12.3543 20.0382 12.2685Z" fill="white"/>
-                        </svg>
-                        <p class="ml-2 text-white font-medium">Kehadiran</p>
-                    </nuxt-link>
-                </li>
-                <li class="relative">
-                    <nuxt-link to="/" class="flex h-12 items-center px-6 py-4 transition duration-300 ease-linear hover:bg-[#484D59]">
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_61_518)">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M3 5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5ZM13.939 7.655C13.586 6.772 12.321 6.822 12.037 7.729L10.285 13.335L9.897 12.558C9.8131 12.3903 9.6842 12.2494 9.52472 12.1508C9.36523 12.0523 9.18147 12 8.994 12H7C6.73478 12 6.48043 12.1054 6.29289 12.2929C6.10536 12.4804 6 12.7348 6 13C6 13.2652 6.10536 13.5196 6.29289 13.7071C6.48043 13.8946 6.73478 14 7 14H8.382L9.594 16.425C10.001 17.238 11.191 17.142 11.462 16.275L13.116 10.982L14.069 13.365C14.222 13.749 14.594 14 15.007 14H17C17.2652 14 17.5196 13.8946 17.7071 13.7071C17.8946 13.5196 18 13.2652 18 13C18 12.7348 17.8946 12.4804 17.7071 12.2929C17.5196 12.1054 17.2652 12 17 12H15.677L13.939 7.655Z" fill="white"/>
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_61_518">
-                                    <rect width="24" height="24" fill="white"/>
-                                </clipPath>
-                            </defs>
-                        </svg>
-                        <p class="ml-2 text-white font-medium">Kualitas & Akurasi</p>
-                    </nuxt-link>
-                </li>
-                <li class="relative">
-                    <nuxt-link to="/" class="flex h-12 items-center px-6 py-4 transition duration-300 ease-linear hover:bg-[#484D59]">
-                        <svg 
-                            width="23" 
-                            height="22" 
-                            viewBox="0 0 20 20" 
-                            fill="none" 
-                            xmlns="http://www.w3.org/2000/svg">
-                            <mask id="mask0_1564_1854" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
-                                <path d="M18 16.6667V3.33333C18 2.97971 17.8595 2.64057 17.6095 2.39052C17.3594 2.14048 17.0203 2 16.6667 2H3.33333C2.97971 2 2.64057 2.14048 2.39052 2.39052C2.14048 2.64057 2 2.97971 2 3.33333V16.6667C2 17.0203 2.14048 17.3594 2.39052 17.6095C2.64057 17.8595 2.97971 18 3.33333 18H16.6667C17.0203 18 17.3594 17.8595 17.6095 17.6095C17.8595 17.3594 18 17.0203 18 16.6667Z" fill="white" stroke="white" stroke-width="4" stroke-linejoin="round"/>
-                                <path d="M9.99991 6.14038L8.7128 8.76705L5.78925 9.19105L7.90702 11.2613L7.4008 14.1404L9.99991 12.755L12.5995 14.1404L12.0972 11.2613L14.211 9.19105L11.3039 8.76705L9.99991 6.14038Z" fill="black" stroke="black" stroke-width="2" stroke-linejoin="round"/>
-                            </mask>
-                            <g mask="url(#mask0_1564_1854)">
-                            <path d="M0.666687 2.66675C0.666687 1.56218 1.56212 0.666748 2.66669 0.666748H17.3334C18.4379 0.666748 19.3334 1.56218 19.3334 2.66675V17.3334C19.3334 18.438 18.4379 19.3334 17.3334 19.3334H2.66668C1.56212 19.3334 0.666687 18.438 0.666687 17.3334V2.66675Z" fill="white"/>
-                            </g>
-                        </svg>
-                        <p class="ml-2 text-white font-medium">Produktivitas</p>
                     </nuxt-link>
                 </li>
                 <li class="relative">
@@ -103,15 +43,18 @@
                     </div>
                 </li>
                 <ul :class="{ 'hidden': !dropdown }" id="dropdown">
-                    <li class="flex h-12  space-y-2 items-center px-4 py-4 transition duration-300 ease-linear hover:bg-[#484D59]">
-                        <nuxt-link to="/" class="flex items-center w-full text-white pl-12">IT</nuxt-link>
-                    </li>
-                    <li  class="flex h-12 items-center px-4 py-4 transition duration-300 ease-linear hover:bg-[#484D59]">
-                        <nuxt-link to="/" class="flex items-center w-full text-white pl-12">Kreatif</nuxt-link>
+                    <li v-for="division in divisions" :key="division" class="flex h-12  space-y-2 items-center px-4 py-4 transition duration-300 ease-linear hover:bg-[#484D59]">
+                        <nuxt-link :to="`/admin/tim/${division}`" class="capitalize flex items-center w-full text-white pl-12">{{ division }}</nuxt-link>
                     </li>
                 </ul>
             </ul>
+            <button @click="toggleSidebar" class="w-fit h-fit mx-24 my-6 px-3 py-2 bg-transparent border border-white rounded-md">
+                <svg width="12" height="16" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.3 0L11.5 2L4.9 8L11.5 14L9.3 16L0.5 8L9.3 0Z" fill="white"/>
+                </svg>
+            </button>
         </nav>
+    </transition>
     </div>
 </template>
 
@@ -120,15 +63,23 @@ export default {
     data() {
         return {
             dropdown: false, 
+            showSidebar: true,
+            divisions: ['IT', 'kreatif', 'keuangan']
         };
     },
     methods: {
         dropdownOpen() {
             this.dropdown = !this.dropdown; 
+        },
+        toggleSidebar() {
+            this.showSidebar = !this.showSidebar;
         }
-    }
+    },
 }
 </script>
 
 <style>
+.font-display {
+    font-family: Roboto, sans-serif;
+}
 </style>
