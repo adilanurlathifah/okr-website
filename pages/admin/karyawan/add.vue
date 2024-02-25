@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center">
-        <div class="mt-[9rem] p-6 rounded-xl bg-white w-[417px] h-auto shadow-md">
+        <div class="mt-[8rem] p-6 rounded-xl bg-white w-[417px] h-auto shadow-md">
             <div class="flex flex-row items-center gap-2 pb-3">
                 <button>
                     <nuxt-link to="/admin/">
@@ -20,10 +20,10 @@
                         </svg>
                     </nuxt-link>
                 </button>
-                <h1 class="text-center font-bold text-xl capitalize">Tambah {{ formType }}</h1>
+                <h1 class="text-center font-bold text-xl capitalize">Tambah Karyawan</h1>
             </div>
             <!-- <p class="text-center text-slate-500">Tambah Anggota tim disini</p> -->
-            <form v-if="formType === 'karyawan'">
+            <form @submit="submit($event)">
                 <div class="mt-6">
                     <div class="text-base text-left">
                         <label class="font-bold">Nama</label>
@@ -33,9 +33,9 @@
                         <label class="font-bold">Alamat</label>
                         <input type="text" class="p-2 mt-2 rounded-lg w-full h-[45px] border border-gray-300 focus:ring-slate-700" placeholder="ex. John Doe.." required>
                     </div>
-                    <!-- <div class="mt-4">
-                        <label class="font-bold">{{ editAddText }} Posisi Kerja</label>
-                        <select v-model="karyawan.pekerjaan" id="posisi" class="mt-2 shadow-sm border border-gray-300 text-base rounded-lg block w-full h-[45px] p-2" required>
+                    <div class="mt-2">
+                        <label class="font-bold">Posisi Kerja</label>
+                        <select id="posisi" class="mt-2 shadow-sm border border-gray-300 text-base rounded-lg block w-full h-[45px] p-2" required>
                             <option value="">Semua Posisi</option>
                             <option value="backend">Back End Developer</option>
                             <option value="devops">DevOps</option>
@@ -44,43 +44,21 @@
                             <option value="frontend">Front End Developer</option>
                             <option value="graphic-designer">Graphic Designer</option>
                         </select>
-                    </div> -->
+                    </div>
                 </div>
                 <ButtonForm class="mt-[60px]" />
             </form>
-            <!-- <form @submit="submit($event)" v-if="formType === 'pic'">
-                <div class="mt-4">
-                    <div class="text-base text-left">
-                        <label class="font-bold">Nama</label>
-                        <input type="text" class="p-2 mt-2 rounded-lg w-full h-[45px] border border-gray-300 focus:ring-slate-700" placeholder="ex. John Doe..">
-                    </div>
-                    <div class="text-base text-left mt-2">
-                        <label class="font-bold">Email</label>
-                        <input type="email" class="p-2 mt-2 rounded-lg w-full h-[45px] border border-gray-300 focus:ring-slate-700" placeholder="ex. johndoe@gmail.com">
-                    </div>
-                    <div class="mt-2">
-                        <label class="font-bold">Department</label>
-                        <select id="posisi" class="mt-2 shadow-sm border border-gray-300 text-base rounded-lg block w-full h-[45px] p-2">
-                            <option value="">Pilih Department</option>
-                            <option value="IT">IT</option>
-                            <option value="Kreatif">Kreatif</option>
-                            <option value="Keuangan">Keuangan</option>
-                        </select>
-                    </div>
-                </div>
-                <ButtonForm class="mt-6"/>
-            </form> -->
         </div>
     </div>
 </template>
 
 <script>
-import ButtonForm from '../../../components/UI/ButtonForm.vue';
+import ButtonForm from '~/components/UI/ButtonForm.vue';
 export default {
     layout: 'default',
     components: { ButtonForm },
     async asyncData({ params }) {
-        return { formType: params.slug};
+        return { params };
     },
 }
 </script>

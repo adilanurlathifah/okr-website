@@ -22,7 +22,8 @@ export default {
   plugins: [
     { src: '~plugins/v-calendar.js', ssr: false },
     { src: '~/plugins/vue-tailwind.client.js'},
-    { src: '~/plugins/vue-sweetalert2.js'}
+    { src: '~/plugins/vue-sweetalert2.js'},
+    { src: '~/plugins/vue-good-table', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

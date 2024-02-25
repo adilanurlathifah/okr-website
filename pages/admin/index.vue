@@ -1,17 +1,19 @@
 <template>
     <div class="flex h-auto bg-gray-100">
-      <div class="flex-1 z-10 ml-72 mt-24 transition-all duration-300">
-        <h1 class="text-2xl font-bold">
-          Selamat Datang {{ $store.state.user ? `${$store.state.user.username}` : 'Guest' }}
-        </h1>
-          <h5 class="text-slate-400 mt-1">
-            Silahkan cek capaian target Objective Key Results tim disini 
-          </h5>
+      <div class="px-10 pt-28 overflow-hidden md:ml-[300px]">
+          <div class="flex flex-col">
+            <h1 class="text-2xl font-bold">
+              Selamat Datang {{ $store.state.user ? `${$store.state.user.username}` : 'Guest' }}
+            </h1>
+            <h5 class="text-slate-400 mt-1">
+              Silahkan cek capaian target Objective Key Results tim disini 
+            </h5>
+          </div>
           <div id="dashboard-container" class="bg-white h-4/5 rounded-3xl shadow-lg w-auto mt-8 mr-10">
             <div class="flex flex-row items-center justify-between">
               <div class="flex flex-col">
               <h1 class="text-2xl font-bold text-[#0C1662] px-5 py-6">
-                List Tim 
+                Semua Tim 
               </h1>                     
               <form>   
                   <div class="relative ml-4">
@@ -39,7 +41,7 @@
                 <button class="mt-20 text-[#191F2F] font-semibold">02 January 2024</button>
               </div>
             </div>
-          <!-- <div class="container px-5 py-6 mb-10">
+          <div class="container px-5 py-6 mb-10">
             <div class="flex flex-row">
               <table class="table w-full h-auto font-display">
                 <thead>
@@ -56,7 +58,7 @@
                   </tr>
                 </thead>
                 <tbody class="text-center">
-                  <tr class="border-b-2 text-left px-3 hover:bg-slate-50" v-for="team in sortedTeams" :key="team.id">
+                  <tr class="border-b-2 text-left px-3 hover:bg-slate-50" v-for="team in teams" :key="team.id">
                     <td class="text-left py-3">{{team.id}}</td>
                     <td class="text-left">{{team.nama}}</td>
                     <td class="px-2">{{team.divisi}}</td>
@@ -90,7 +92,7 @@
                   :totalItems="10"
                 />
               </div>
-            </div> -->
+            </div>
           </div>
           <!-- <ConfirmDialog v-if="isConfirmDialog">
             <template v-slot:title>Konfirmasi</template>
@@ -106,9 +108,9 @@
     
 <script>
 import auth from '~/middleware/auth'
-// import { IT } from '@/models/IT'
-// import ConfirmDialog from '~/components/UI/ConfirmDialog.vue'
-// import BlueButton from '~/components/UI/BlueButton.vue'
+import { IT } from '@/models/IT'
+import ConfirmDialog from '~/components/UI/ConfirmDialog.vue'
+import BlueButton from '~/components/UI/BlueButton.vue'
 
 export default {
       name: 'AdminPage',
@@ -117,7 +119,7 @@ export default {
       // components: { ConfirmDialog, BlueButton },
       data() {
         return {
-          // teams: IT,
+          teams: IT,
           auth: auth,
           // deleteNama: '',
           // isConfirmDialog: false

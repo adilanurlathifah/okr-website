@@ -7,8 +7,8 @@
           <h5 class="text-slate-400 mt-1">
             Silahkan cek capaian target Objective Key Results tim disini 
           </h5>
-          <div class="flex flex-row mx-0 mt-4 rounded-lg gap-6">
-            <div class="bg-white rounded-md w-[628px] h-auto pl-4 pr-4">
+          <div class="flex flex-row pr-9 justify-between mx-0 mt-4 rounded-lg gap-6">
+            <div class="bg-white rounded-md w-full h-auto pl-4 pr-4">
               <p class="text-xl text-center font-bold py-5">Key Results</p>
                 <div class="flex flex-row justify-center gap-2">
                   <div class="flex flex-col font-display"> 
@@ -119,12 +119,12 @@
                         <div class="py-1 rounded-md shadow-xs">
                           <ul>
                             <li v-for="option in options" :key="option" class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100">
-                              <nuxt-link :to="`/admin/forms/${option}`" class="capitalize">{{ option }}</nuxt-link>
+                              <nuxt-link :to="`/admin/${option}/add`" class="capitalize">{{ option }}</nuxt-link>
                             </li>
                           </ul>
                         </div>
                       </t-dropdown>
-                        <nuxt-link to="/">
+                        <nuxt-link to="/admin/add-okr">
                             <BlueButton class="ml-3" :showIcon="true">
                                 <template v-slot:message>OKR</template>
                             </BlueButton>
@@ -140,26 +140,24 @@
                   <tr class="border-b-2 text-left text-[#0C1662]">
                     <th>No</th>
                     <th>Nama</th>
-                    <th>Alamat</th>
-                    <!-- <th>Divisi</th>
+                    <th>Divisi</th>
                     <th>Pekerjaan</th>
                     <th>Performa</th>
-                    <th>Kehadiran</th>
+                    <!-- <th>Kehadiran</th> -->
                     <th>Kualitas</th>
                     <th>Produktivitas</th>
-                    <th>Action</th> -->
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody class="text-center">
                   <tr class="border-b-2 text-left px-3 hover:bg-slate-50" v-for="team in teams" :key="team.id">
                     <td class="text-left py-3">{{team.id}}</td>
                     <td class="text-left">{{team.nama}}</td>
-                    <td>{{team.alamat}}</td>
-                    <!-- <td>{{team.pekerjaan}}</td> -->
-                    <!-- <td>{{team.performa}}%</td>
+                    <td>{{team.pekerjaan}}</td>
+                    <td>{{team.performa}}%</td>
                     <td>{{team.kehadiran}}%</td>
                     <td>{{team.kualitas}}%</td>
-                    <td>{{team.produktivitas}}%</td> -->
+                    <td>{{team.produktivitas}}%</td>
                     <td>
                       <button class="bg-black rounded-md p-2">
                         <svg width="21" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -221,12 +219,12 @@ export default {
             case 'IT':
                 teams = IT;
                 break;
-            // case 'keuangan':
-            //     teams = FINANCE;
-            //     break;
-            // case 'kreatif':
-            //     teams = KREATIF;
-            //     break;
+            case 'keuangan':
+                teams = FINANCE;
+                break;
+            case 'kreatif':
+                teams = KREATIF;
+                break;
             default:
                 throw new Error('Division not found');
         }
@@ -267,7 +265,7 @@ export default {
 }
 
 .vc-pane-layout {
-  width: 420px;
+  width: 500px;
 }
 
 #grid-key-result {

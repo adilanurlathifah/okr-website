@@ -1,6 +1,6 @@
 <template>
     <div class="relative">
-        <header class="w-full pt-4 px-8 fixed top-0 left-0 right-0 z-40 h-20 bg-white shadow-sm">
+        <header class="w-full pt-4 px-8 fixed top-0 left-0 right-0 z-50 h-20 bg-white shadow-sm">
             <div class="flex items-center justify-between">
                 <img 
                     src="~/assets/img/OKR.svg"

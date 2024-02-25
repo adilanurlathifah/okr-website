@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueTailwind from 'vue-tailwind'
 import {
   TPagination,
-  TDropdown
+  TDropdown,
+  TTable
 } from 'vue-tailwind/dist/components'
 
 const settings = {
@@ -27,7 +28,7 @@ const settings = {
     component: TDropdown,
     props: {
       fixedClasses: {
-        button: 'flex items-center text-gray-700 block w-full h-[45px] px-4 py-2 transition duration-100 ease-in-out border border-gray-300 rounded-md disabled:cursor-not-allowed',
+        button: 'flex items-center text-gray-700 block w-full h-[45px] px-6 py-2 transition duration-100 ease-in-out border border-gray-300 rounded-md disabled:cursor-not-allowed',
         wrapper: 'inline-flex flex-col',
         dropdownWrapper: 'relative z-10',
         dropdown: 'origin-top-left absolute left-0 w-56 rounded shadow',
@@ -43,6 +44,23 @@ const settings = {
         dropdown: 'bg-white'
       },
       variants: {}
+    }
+  },
+  't-table': {
+    component: TTable,
+    props: {
+      classes: {
+        table: 'min-w-full divide-y divide-gray-100 shadow-sm border-gray-200 border',
+        thead: '',
+        theadTr: '',
+        theadTh: 'text-center px-3 py-3 font-semibold text-left bg-gray-50 border-b',
+        tbody: 'bg-white divide-y divide-gray-100',
+        tr: '',
+        td: 'px-3 py-3 whitespace-no-wrap text-center',
+        tfoot: '',
+        tfootTr: '',
+        tfootTd: ''
+      },
     }
   }
 }

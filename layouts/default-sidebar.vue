@@ -1,8 +1,7 @@
 <template>
     <div>
-        <navbar />
-        <nuxt />
-        <Sidebar/>
+        <Navbar />
+        <Sidebar class="hidden md:flex"/>
     </div>
 </template>
 

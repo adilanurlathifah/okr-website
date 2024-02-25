@@ -51,7 +51,7 @@ methods: {
 
     if (user) {
         this.$store.commit('setUser', user);
-        this.$router.push({ path: user.role === 'admin' ? '/admin-page' : '/user-page' });
+        this.$router.push({ path: user.role === 'admin' ? '/admin/' : '/user/' });
     } else {
         alert('Username atau Password salah!');
     }
