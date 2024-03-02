@@ -13,7 +13,6 @@ import Navbar from '~/components/Navbar.vue';
 export default {
     name: 'UserPage',
     // layout: 'default-sidebar',
-    middleware: 'auth',
     components: { Navbar },
     computed: {
       greetingMessage() {
@@ -23,10 +22,5 @@ export default {
         // return `Selamat Datang`;
       }
     },
-    methods: {
-      logout() {
-        this.$router.push('/login');
-      }
-    }
   }
 </script>

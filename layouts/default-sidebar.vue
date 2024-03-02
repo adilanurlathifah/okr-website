@@ -1,7 +1,10 @@
 <template>
-    <div>
-        <Navbar />
-        <Sidebar class="hidden md:flex"/>
+    <div class="flex">
+        <Navbar/>
+        <Sidebar class="hidden md:flex md:mr-2"/> 
+        <div class="flex-grow pt-[100px] px-3">
+            <nuxt/>
+        </div>
     </div>
 </template>
 

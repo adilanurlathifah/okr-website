@@ -1,17 +1,20 @@
 export const state = () => ({
-    user: null,
-});
+    authData: null
+})
 
 export const mutations = {
-    setUser(state, user) {
-        state.user = user;
-    },
-    logout(state) {
-        state.user = null;
-        state.token = null;
-    },
-};
+  setAuthData(state, authData) {
+    state.authData = authData
+  }
+}
 
 export const actions = {
-    
-};
+  async login({ commit }, loginData) {
+    try {
+      const response = await this.$axios.$post('/api/auth/admin/login', loginData)
+      commit('setAuthData', response.data)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}

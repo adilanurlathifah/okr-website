@@ -8,7 +8,7 @@
                     alt="okr-logo"
                     loading="lazy"
                 />
-                <button class="bg-black text-white px-4 py-3 ml-10 rounded-md" @click="logout">Logout</button>
+                <button @click="logout" class="bg-black text-white px-4 py-3 ml-10 rounded-md">Logout</button>
             </div>
         </header>
     </div>
@@ -17,9 +17,9 @@
 <script>
 export default {
     methods: {
-      logout() {
-        this.$router.push('/login');
-      }
+        logout() {
+            this.$auth.logout();
+        }
     }
 }
 </script>

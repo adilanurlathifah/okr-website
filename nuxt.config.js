@@ -23,7 +23,8 @@ export default {
     { src: '~plugins/v-calendar.js', ssr: false },
     { src: '~/plugins/vue-tailwind.client.js'},
     { src: '~/plugins/vue-sweetalert2.js'},
-    { src: '~/plugins/vue-good-table', ssr: false }
+    { src: "@/services/get-access-token", mode: "client" },
+    { src: '~/plugins/axios'}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -33,7 +34,6 @@ export default {
   buildModules: [
     '@nuxtjs/google-fonts'
   ],
-
   googleFonts: {
     families: {
       Roboto: true,
@@ -43,17 +43,43 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
+    '@nuxtjs/auth',
     '@nuxtjs/axios',
     '@nuxtjs/tailwindcss',
     'vue-sweetalert2/nuxt'
   ],
-
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/api/auth/admin/login', method: 'post', propertyName: 'data.token' },
+          logout: { url: '/api/auth/admin/logout', method: 'get' },
+          user: { url: '/api/user', method: 'get', propertyName: 'data' }
+        },
+        tokenRequired: true,
+        tokenType: 'Bearer'
+      }
+    },
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      home: '/admin'
+    }
+  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'http://192.168.18.50:8000',
   },
-
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+          name: 'admin',
+          path: '/',
+          component: resolve(__dirname, 'pages/admin/index.vue'),
+        });
+    },
+    // middleware: ['auth'],
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
