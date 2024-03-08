@@ -10,5 +10,7 @@
 export default {
   name: 'IndexPage',
   layout: 'default-sidebar',
+  // middleware: 'auth',
+  auth: false,
 }
 </script>

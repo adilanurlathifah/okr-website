@@ -16,6 +16,7 @@
     "nuxt": "^2.15.8",
     "v-calendar": "^2.4.2",
     "vue": "^2.7.10",
+    "vue-loading-overlay": "3.0",
     "vue-server-renderer": "^2.7.10",
     "vue-sweetalert2": "^5.0.5",
     "vue-tailwind": "^2.5.1",

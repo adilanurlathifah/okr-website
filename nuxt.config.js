@@ -22,7 +22,7 @@ export default {
     { src: "~/plugins/vue-tailwind.client.js" },
     { src: "~/plugins/vue-sweetalert2.js" },
     { src: "@/services/get-access-token", mode: "client" },
-    { src: "~/plugins/axios" },
+    { src: "~/plugins/axios.js"},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -50,7 +50,7 @@ export default {
     },
     baseURL: process.env.HOST_API,
     progress: false,
-    proxy: true,
+    proxy: false,
   },
   proxy: {
     "/api/": process.env.HOST_API || "",
@@ -80,7 +80,8 @@ export default {
           maxAge: 172800,
         },
         user: {
-          property: "data",
+          property: false,
+          
         },
         endpoints: {
           login: {

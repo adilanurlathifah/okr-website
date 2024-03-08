@@ -68,7 +68,7 @@ export default {
         return {
             dropdown: false, 
             showSidebar: true,
-            divisions: ['finance', 'IT', 'kreatif', ]
+            divisions: ['keuangan', 'IT', 'kreatif', ]
         };
     },
     methods: {

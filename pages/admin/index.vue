@@ -99,6 +99,7 @@ import { IT } from '@/models/IT'
 
 export default {
       name: 'AdminPage',
+      middleware: 'auth',
       layout: 'default-sidebar',
       data() {
         return {

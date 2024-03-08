@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-y-auto md:ml-[300px]">
+    <div>
         <div class="flex justify-center pr-12">
             <div class="mt-[8rem] p-6 bg-white rounded-lg w-full h-auto mb-10 shadow-md">
                 <div class="flex justify-between items-center w-full">
