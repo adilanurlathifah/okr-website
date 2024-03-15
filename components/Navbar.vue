@@ -31,7 +31,7 @@
                             @keydown="keydownHandler"
                         >
                         <img class="w-10 h-10 mr-2 rounded-full" src="~/assets/img/profile.png" alt="profile-pic">
-                            {{ $auth.user.name }}
+                           John Doe <!-- {{ $auth.user.name }} -->
                         </button>
                     </div>
 

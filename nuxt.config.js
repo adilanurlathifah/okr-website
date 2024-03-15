@@ -94,7 +94,6 @@ export default {
       },
     },
   },
-
   router: {
     extendRoutes(routes, resolve) {
       routes.push({
@@ -103,7 +102,6 @@ export default {
         component: resolve(__dirname, "pages/admin/index.vue"),
       });
     },
-    // middleware: ['auth'],
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

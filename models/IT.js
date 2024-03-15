@@ -2,53 +2,40 @@ export const IT = [
     {
         id: 1,
         nama: "Ediva Birmingham",
-        divisi: "IT",
+        divisi: "Developer",
         pekerjaan: "Software Engineer",
+        email: 'bare@cyberarmy.id',
         performa: 80,
         kehadiran: 89,
         kualitas: 79,
-        produktivitas: 90
+        produktivitas: 90,
+        total: 90,
+        status: 'Aktif'
     },
     {
         id: 2,
         nama: "Donni Ridsdole",
-        alamat: "Saturnus",
-        divisi: "IT",
+        divisi: "Developer",
         pekerjaan: "Software Engineer",
+        email: 'bare@cyberarmy.id',
         performa: 80,
         kehadiran: 89,
         kualitas: 79,
-        produktivitas: 90
+        produktivitas: 90,
+        total: 90,
+        status: 'Aktif'
    },
     {
         id: 3,
         nama: "Alexa Thompson",
-        alamat: "Tahuan",
-        divisi: "IT",
+        divisi: "Developer",
         pekerjaan: "Software Engineer",
+        email: 'bare@cyberarmy.id',
         performa: 80,
         kehadiran: 89,
         kualitas: 79,
-        produktivitas: 90
+        produktivitas: 90,
+        total: 90,
+        status: 'Aktif'
    },
-//     {
-//         id: 4,
-//         nama: "Brandon Smith",
-//         divisi: "IT",
-//         pekerjaan: "Software Engineerer",
-//         performa: 80,
-//         kehadiran: 89,
-//         kualitas: 79,
-//         produktivitas: 90
-//    },
-//     {
-//         id: 5,
-//         nama: "Darla Williams",
-//         divisi: "IT",
-//         pekerjaan: "Software Engineerer",
-//         performa: 80,
-//         kehadiran: 89,
-//         kualitas: 79,
-//         produktivitas: 90
-//     }
 ];

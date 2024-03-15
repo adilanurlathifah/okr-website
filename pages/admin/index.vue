@@ -1,190 +1,273 @@
 <template>
   <div>
-      <div class="flex flex-col p-3 sm:px-7">
+      <div class="flex flex-col py-6 md:py-2 md:flex-row justify-between">
+        <div class="flex flex-col mb-10">
           <h1 class="text-2xl font-bold">
-            Selamat Datang   
+            Selamat Datang <!-- {{ $auth.user.name }} -->    
           </h1>
           <h5 class="text-slate-400 mt-1">
-            Silahkan cek capaian target Objective Key Results tim disini   
+            Silahkan cek capaian target Objective Key Results tim disini 
           </h5>
+        </div>
+        <div class="md:ml-12 md:mt-4">
+          <button 
+              @click="buttonClicked"
+              type="button"
+              class="w-auto bg-[#191F2F] whitespace-nowrap gap-1 flex flex-row items-center text-white rounded-md px-6 py-2"
+          >
+              Undang Anggota
+              <img class="ml-1 mt-[1px]" src="~/assets/img/icons/plus.svg" />
+          </button>
+        </div>
       </div>
-      <div id="dashboard-container" class="bg-white h-auto rounded-3xl shadow-lg w-auto mt-8 mx-[10px] md:mx-18">
-          <h1 class="text-2xl font-semibold text-[#0C1662] px-5 py-6">
-            Semua Tim   
-          </h1>
-          <div class="flex flex-row gap-2 justify-between">
-              <div class="flex flex-row">
-                <div class="relative ml-4">
-                    <div class="absolute inset-y-0 flex items-center ps-3 pointer-events-none">
-                      <!-- <img src="~/assets/img/search.svg"/> -->
-                    </div>
-                    <input type="search" id="default-search" class="block w-full lg:w-[250px] h-[45px] p-2 ps-10 text-[15px] font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50" placeholder="Cari Karyawan..." required>
-                </div>
+      <div class="flex flex-col">
+        <h4 class="font-bold text-xl py-2">Departement</h4>
+        <div class="flex flex-col lg:flex-row gap-10">
+          <div class="container bg-[#191F2F] px-2 py-2 flex justify-center rounded-xl w-auto h-auto">
+            <div class="flex flex-row p-3">
+              <div class="flex flex-col text-center items-center mt-1 px-1">
+                <h2 class="text-2xl text-white font-semibold">79</h2>
+                <p class="text-white text-sm font-normal">Total</p>
               </div>
-              <div class="flex justify-end gap-3 mr-6">
-                <select id="posisi" class="shadow-sm bg-gray-50 border font-normal border-gray-300 text-[15px] rounded-lg block w-full lg:w-[200px] h-[45px] p-2">
-                  <option value="">Semua Tim</option>
-                  <option value="finance">Finance</option>
-                  <option value="kreatif">Kreatif</option>
-                  <option value="IT">IT</option>
-                </select>
-                <div class="flex flex-row items-center gap-2">
-                  <img src="~/assets/img/filter.svg" class="w-8 h-10" />
-                  <button class="text-[#191F2F] mb-2 text-[15px] hidden lg:block font-semibold">02/01/24</button>
-                </div>   
-              </div> 
-          </div>
-          <div class="container px-5 py-6 mb-10">
-            <div class="flex flex-row">
-              <table class="table w-full h-auto responsive-table">
-                <thead>
-                  <tr class="border-b-2 text-left text-[#0C1662]">
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Divisi</th>
-                    <th>Pekerjaan</th>
-                    <th>Performa</th>
-                    <th>Kehadiran</th>
-                    <th>Kualitas</th>
-                    <th>Produktivitas</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody class="text-center">
-                  <tr class="border-b-2 text-left px-3 hover:bg-slate-50" v-for="team in teams" :key="team.id">
-                    <td class="text-left py-3">{{team.id}}</td>
-                    <td class="text-left">{{team.nama}}</td>
-                    <td class="px-2">{{team.divisi}}</td>
-                      <td>{{team.pekerjaan}}</td>
-                      <td>{{team.performa}}%</td>
-                      <td>{{team.kehadiran}}%</td>
-                      <td>{{team.kualitas}}%</td>
-                      <td>{{team.produktivitas}}%</td>
-                    <td>
-                      <button class="bg-black rounded-md p-2">
-                        <nuxt-link to="/admin/karyawan/detail-karyawan">
-                          <svg width="21" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16.9424 1.7605L19.5674 4.3855L17.5663 6.3875L14.9413 3.7625L16.9424 1.7605ZM7.32788 14H9.95288L16.329 7.62387L13.704 4.99887L7.32788 11.375V14Z" fill="white"/>
-                            <path d="M16.9529 16.625H7.46613C7.44338 16.625 7.41976 16.6337 7.39701 16.6337C7.36813 16.6337 7.33926 16.6259 7.30951 16.625H4.70288V4.375H10.694L12.444 2.625H4.70288C3.73776 2.625 2.95288 3.409 2.95288 4.375V16.625C2.95288 17.591 3.73776 18.375 4.70288 18.375H16.9529C17.417 18.375 17.8621 18.1906 18.1903 17.8624C18.5185 17.5342 18.7029 17.0891 18.7029 16.625V9.0405L16.9529 10.7905V16.625Z" fill="white"/>
-                          </svg>
-                        </nuxt-link>
-                      </button>
-                      <button class="bg-[#FFE3E3] rounded-md p-2">
-                        <svg width="22" height="21" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M7.82788 21.5C7.27788 21.5 6.80721 21.3043 6.41588 20.913C6.02455 20.5217 5.82855 20.0507 5.82788 19.5V6.5H4.82788V4.5H9.82788V3.5H15.8279V4.5H20.8279V6.5H19.8279V19.5C19.8279 20.05 19.6322 20.521 19.2409 20.913C18.8495 21.305 18.3785 21.5007 17.8279 21.5H7.82788ZM9.82788 17.5H11.8279V8.5H9.82788V17.5ZM13.8279 17.5H15.8279V8.5H13.8279V17.5Z" fill="#CA3131"/>
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              </div>
-              <div class="mt-4">
-                <t-pagination
-                  class="responsivePagination"
-                  :value="1"
-                  :perPage="5"
-                  :limit="2"
-                  :totalItems="5"
-                />
+              <div class="flex flex-col text-left ml-3 pl-4 pr-12 py-2 bg-[#484D59] rounded-md md:w-auto h-auto">
+                <h2 class="text-xl text-white font-semibold">Developer</h2>
+                <p class="text-white text-sm font-normal">4 karyawan</p>
               </div>
             </div>
+          </div>
+          <div class="container bg-[#191F2F] px-2 py-2 flex justify-center rounded-xl w-auto h-auto">
+            <div class="flex flex-row p-3">
+              <div class="flex flex-col text-center items-center mt-1 px-1">
+                <h2 class="text-2xl text-white font-semibold">39</h2>
+                <p class="text-white text-sm font-normal">Total</p>
+              </div>
+              <div class="flex flex-col text-left ml-3 pl-4 pr-12 py-2 bg-[#484D59] rounded-md w-auto h-auto">
+                <h2 class="text-xl text-white font-semibold">Creative</h2>
+                <p class="text-white text-sm font-normal">4 karyawan</p>
+              </div>
+            </div>
+          </div>
+          <div class="container bg-[#191F2F] px-2 py-2 flex justify-center rounded-xl w-auto h-auto">
+            <div class="flex flex-row p-3">
+              <div class="flex flex-col text-center items-center mt-1 px-1">
+                <h2 class="text-2xl text-white font-semibold">45</h2>
+                <p class="text-white text-sm font-normal">Total</p>
+              </div>
+              <div class="flex flex-col text-left ml-3 pl-4 pr-12 py-2 bg-[#484D59] rounded-md w-auto h-auto">
+                <h2 class="text-xl text-white font-semibold">Finance</h2>
+                <p class="text-white text-sm font-normal">4 karyawan</p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      <!-- <InfoDashboard /> -->
+      <div class="flex flex-col lg:flex-row my-8 gap-3">
+        <VCard class="flex flex-col">
+          <div class="flex flex-row items-center justify-between gap-3 px-2 py-3">
+            <h5 class="font-bold text-md md:text-lg">Total Progress Semua Divisi</h5>
+            <img src="~/assets/img/icons/settings.svg" class="object-contain w-4 h-3"/>
+          </div>
+          <table class="table w-full h-auto table-fixed my-3">
+            <thead>
+                <tr class="mb-2 text-center text-sm md:text-lg text-[#0C1662]">
+                    <th>PIC</th>
+                    <th>Divisi</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody class="text-center text-sm md:text-base">
+                  <tr class="hover:bg-slate-50" v-for="data in totalProgress" :key="data.id">
+                    <td class="py-3">{{data.pic}}</td>
+                    <td>{{data.divisi}}</td>
+                    <td>{{data.total}}%</td>
+                  </tr>
+              </tbody>
+          </table>
+        </VCard>
+        <VCard class="flex flex-col pb-4 md:pb-1">
+          <div class="flex flex-row justify-between gap-3 px-2 py-3">
+              <h5 class="font-bold text-lg">Aktivitas Terakhir</h5>
+              <p class="text-semibold">Lihat Semua</p>
+          </div>
+          <div class="container bg-indigo-50 rounded-md px-3 mx-auto py-2 overflow-y-auto" style="max-height: 10rem;">
+            <div class="flex flex-row gap-2 whitespace-nowrap p-2" v-for="history in actHistory" :key="history.id">
+                <div class="flex-grow">
+                  <p class="text-sm md:text-base font-semibold">{{ history.role }}</p>
+                </div>
+                <div class="flex-grow-1">
+                  <p class="text-xs md:text-base">{{ history.activity }}</p>
+                </div>
+            </div>
+          </div>
+        </VCard>
+      </div>
+      <VCard>
+         <h1 class="font-bold text-xl p-4">Developer</h1>
+          <div class="bg-[#F6F8FF] gap-2 text-sm flex flex-row items-center px-3 mx-4 rounded-md w-auto md:w-[460px] h-[45px]">
+              <p class="font-bold">PIC</p>
+              <p>Rendy Bustary</p>
+              <p>Rendy@gmail.com</p>
+          </div>
+          <div v-if="teams.length > 0">
+              <div class="flex flex-col md:flex-row gap-2 mt-2 md:px-2 px-4 justify-between">
+                <div class="flex flex-col md:flex-row">
+                <div class="relative">
+                    <div class="absolute inset-y-0 flex items-center ps-3 pointer-events-none">
+                        <img src="~/assets/img/icons/search.svg"/>
+                    </div>
+                    <input 
+                      type="search" 
+                      id="default-search" 
+                      class="block w-full lg:w-[350px] border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-[15px] font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
+                      placeholder="Cari Anggota Tim" 
+                      required>
+                  </div>
+                </div>
+                <div class="flex flex-col md:flex-row justify-end gap-3">
+                    <div class="flex flex-col md:flex-row gap-1">
+                      <select id="posisi" class="font-normal focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
+                          <option value="">Posisi</option>
+                          <option value="backend">Back-End Developer</option>
+                          <option value="backend">DevOps</option>
+                          <option value="backend">Front-End Developer</option>
+                          <option value="backend">Quality Assurance</option>
+                          <option value="backend">UI/UX Designer</option>
+                      </select>
+                      <select id="periode" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 mr-2">
+                          <option value="">Periode</option>
+                          <option value="januari">Januari</option>
+                          <option value="februari">Februari</option>
+                          <option value="maret">Maret</option>
+                          <option value="april">April</option>
+                          <option value="mei">Mei</option>
+                          <option value="juni">Juni</option>
+                          <option value="juli">Juli</option>
+                          <option value="agustus">Agustus</option>
+                          <option value="september">September</option>
+                          <option value="oktober">Oktober</option>
+                          <option value="november">November</option>
+                          <option value="desember">Desember</option>
+                      </select>
+                      <img src="~/assets/img/icons/calendar.svg" class="hidden md:block object-contain w-[20px] h-full" alt=""/>
+                </div>
+                <t-dropdown variant="dark" text="Tambah">
+                  <div class="py-1 rounded-md shadow-xs">
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                      role="menuitem"
+                    >
+                     Admin
+                    </a>
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                      role="menuitem"
+                    >
+                      Karyawan
+                    </a>
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                      role="menuitem"
+                    >
+                      PIC
+                    </a>
+                  </div>
+                </t-dropdown>
+              </div>
+            </div>
+              <div class="container px-5 py-6 mb-10">
+                <div class="flex flex-row">
+                  <table class="table w-full h-auto responsive-table">
+                    <thead>
+                      <tr class="mb-2 text-center text-[#0C1662]">
+                        <th class="py-3">No</th>
+                        <th>Nama Karyawan</th>
+                        <th>Divisi</th>
+                        <th>Posisi</th>
+                        <th>Total</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody class="text-center">
+                      <tr class="hover:bg-slate-50" v-for="data in teams" :key="data.id">
+                        <td class="py-3">{{data.id}}</td>
+                        <td>{{data.nama}}</td>
+                        <td>{{data.divisi}}</td>
+                        <td>{{data.pekerjaan}}</td>
+                        <td>{{data.total}}</td>
+                        <td>
+                          <button class="bg-black rounded-md p-2">
+                              <img src="~/assets/img/icons/edit.svg" />
+                          </button>
+                          <button class="bg-[#FFE3E3] rounded-md p-2">
+                              <img src="~/assets/img/icons/delete.svg" />
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </div>
+                  <div class="mt-8 mr-2 flex justify-end">
+                    <t-pagination
+                      class="responsivePagination"
+                      :value="1"
+                      :perPage="5"
+                      :limit="2"
+                      :totalItems="5"
+                    />
+                  </div>
+                </div>
+            </div>
+      </VCard>
   </div>
 </template>
 
-
 <script>
 import { IT } from '@/models/IT'
+import { total } from '@/models/total-progress'
+import { lastActivity } from '@/models/last-activity'
+import VCard from '@/components/UI/VCard.vue';
+import BlueButton from '@/components/UI/BlueButton.vue';
+import ModalMessage from '@/components/UI/ModalMessage.vue';
+import InfoDashboard from '@/components/UI/InfoDashboard.vue';
 
 export default {
-      name: 'AdminPage',
-      middleware: 'auth',
-      layout: 'default-sidebar',
-      data() {
-        return {
+  auth: false,
+  layout: 'default-admin',
+  components: { VCard, BlueButton, ModalMessage, InfoDashboard },
+  data() {
+      return {
           teams: IT,
-        }
+          totalProgress: total,
+          actHistory: lastActivity,
+          showAddModal: false,
+          showEditModal: false,
+          isOpen: false
+      }
+  },
+  methods: {
+      toggleDropdown() {
+        this.isOpen = !this.isOpen;
       },
-      computed: {
-        // sortedTeams() {
-        //   return this.teams.sort((a, b) => a.id - b.id);
-        // },
+      tambahKategori() {
+          this.showAddModal = true;
       },
-      methods: {
-        logout() {
-          this.$router.push('/login');
-        },
+      editKategori() {
+          this.showEditModal = true;
       },
+      closeModal() {
+          this.showAddModal = false;
+          this.showEditModal = false;
+      }
+  }
 }
 </script>
 
 <style>
 #posisi {
   font-weight: 600;
-}
-
-@media (max-width:  1150px) {
-  .responsive-table,
-  .responsive-table thead,
-  .responsive-table tbody,
-  .responsive-table th,
-  .responsive-table td,
-  .responsive-table tr,
-  .responsivePagination {
-    display: block;
-    padding: 2px;
-  }
-
-  .responsivePagination {
-    display: flex;
-    justify-content: center;
-  }
-
-  .responsive-table th {
-    font-weight: 800;
-  }
-
-  .responsive-table thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-
-  .responsive-table tr { border:  1px solid #ccc;}
-
-  .responsive-table td {
-    border: none;
-    border-bottom:  1px solid #eee;
-    position: relative;
-    padding-left:  50%;
-  }
-
-  .responsive-table td:before {
-    position: absolute;
-    top:  6px;
-    left:  6px;
-    width:  45%;
-    padding-right:  10px;
-    font-weight: 600;
-    color: #191F2F;
-    white-space: nowrap;
-  }
-
-  .responsive-table td:nth-of-type(1):before { content: "No"; }
-  .responsive-table td:nth-of-type(2):before { content: "Nama"; }
-  .responsive-table td:nth-of-type(3):before { content: "Divisi"; }
-  .responsive-table td:nth-of-type(4):before { content: "Pekerjaan"; }
-  .responsive-table td:nth-of-type(5):before { content: "Performa"; }
-  .responsive-table td:nth-of-type(6):before { content: "Kehadiran"; }
-  .responsive-table td:nth-of-type(7):before { content: "Kualitas"; }
-  .responsive-table td:nth-of-type(8):before { content: "Produktivitas"; }
-  .responsive-table td:nth-of-type(9):before { content: "Action"; }
-}
-
-@media (min-width:  1800px) {
-  .responsive-table {
-    width:  100%;
-  }
 }
 </style>

@@ -6,7 +6,7 @@ import {
   TDropdown,
   TTable,
   TModal,
-  TButton,
+  TTag,
   TAlert,
 } from 'vue-tailwind/dist/components'
 
@@ -15,7 +15,7 @@ const settings = {
     component: TPagination,
     props: {
       classes: {
-        wrapper: 'table border-collapse text-center bg-white mx-auto shadow-sm',
+        wrapper: 'table border-collapse text-center bg-white shadow-sm',
         element: 'w-8 h-8 border border-gray-200 table-cell hover:border-gray-100',
         activeElement: 'w-8 h-8 border border-gray-200 border-gray-500 table-cell hover:border-gray-600',
         disabledElement: 'w-8 h-8 border border-gray-200 table-cell',
@@ -47,26 +47,31 @@ const settings = {
         button: 'bg-gray-50',
         dropdown: 'bg-white'
       },
-      variants: {}
+      variants: {
+        dark: {
+          button: 'bg-black text-sm text-white',
+          dropdown: 'bg-white text-sm text-white'
+        }
+      }
     }
   },
-  't-table': {
-    component: TTable,
-    props: {
-      classes: {
-        table: 'min-w-full divide-y divide-gray-100 shadow-sm border-gray-200 border',
-        thead: '',
-        theadTr: '',
-        theadTh: 'text-center px-3 py-2 text-sm font-semibold bg-gray-50 border-b',
-        tbody: 'bg-white text-sm divide-y divide-gray-100',
-        tr: '',
-        td: 'px-3 py-3 whitespace-no-wrap text-center',
-        tfoot: '',
-        tfootTr: '',
-        tfootTd: ''
-      },
-    }
-  },
+  // 't-table': {
+  //   component: TTable,
+  //   props: {
+  //     classes: {
+  //       table: 'min-w-full divide-y divide-gray-100 shadow-sm border-gray-200 border',
+  //       thead: '',
+  //       theadTr: '',
+  //       theadTh: 'text-center px-3 py-2 text-sm font-semibold bg-gray-50 border-b',
+  //       tbody: 'bg-white text-sm divide-y divide-gray-100',
+  //       tr: '',
+  //       td: 'px-3 py-3 whitespace-no-wrap text-center',
+  //       tfoot: '',
+  //       tfootTr: '',
+  //       tfootTd: ''
+  //     },
+  //   }
+  // },
   't-modal': {
     component: TModal,
     props: {
@@ -121,20 +126,17 @@ const settings = {
         }
       }
     }
+  },
+  't-tag': {
+    component: TTag,
+    props: {
+      classes: '',
+      variants: {
+        success: 'inline-flex items-center w-auto px-4 py-1 rounded-full text-xs font-medium leading-2 bg-green-100 text-green-800',
+        danger: 'inline-flex items-center w-auto px-4 py-1 rounded-full text-xs font-medium leading-2 bg-red-100 text-red-800'
+      }
+    }
   }
-  // 't-button': {
-  //   component: TButton,
-  //   props: {
-  //     fixedClasses: 'block px-4 py-2 transition duration-100 ease-in-out focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed',
-  //     classes: 'text-white bg-black border border-transparent shadow-sm rounded hover:bg-slate-900',
-  //     variants: {
-  //       secondary: 'text-gray-800 bg-white border border-gray-300 shadow-sm hover:text-gray-600',
-  //       error: 'text-white bg-red-500 border border-transparent rounded shadow-sm hover:bg-red-600',
-  //       success: 'text-white bg-green-500 border border-transparent rounded shadow-sm hover:bg-green-600',
-  //       link: 'text-blue-500 underline hover:text-blue-600'
-  //     }
-  //   }
-  // }
 }
 
 Vue.use(VueTailwind, settings)

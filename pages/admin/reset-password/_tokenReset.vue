@@ -52,14 +52,53 @@
                     class="bg-[#191F2F] mt-6 px-4 py-2 w-full h-auto rounded-md text-white">
                     Reset Password
                 </button>
+                <loading 
+                    :active.sync="isLoading"
+                    :can-cancel="false"
+                    :is-full-page="false">
+                </loading>
             </form>
+            <div v-if="showSuccessModal" class="fixed z-10 inset-0 overflow-y-auto flex items-center justify-center" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                <div class="flex items-center justify-center text-center">
+                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                    <div class="inline-block align-bottom bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                        <div class="bg-white px-4">
+                            <div class="sm:flex sm:items-start">
+                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                    <div class="mt-2 flex flex-col justify-center items-center">
+                                        <img 
+                                            src="~/assets/img/icons/lock.svg"
+                                            alt="lock-img"
+                                            class="my-4"
+                                            width="85px"/>
+                                        <p class="text-sm text-gray-500">
+                                            Buka email kamu dan segera lakukan reset password!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 py-6 px-6 flex flex-row-reverse justify-center">
+                            <button type="button" class="w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#191F2F] text-base font-medium text-white hover:bg-slate-700 mt-0 w-full sm:text-sm" 
+                            @click="showSuccessModal = false">
+                                OK
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+
 export default {
-    layout: 'default-navbar',
+    layout: 'default',
+    components: { Loading },
     data() {
         return {
             resetpass: {
@@ -67,6 +106,8 @@ export default {
                 c_password: '',
             },
             access_token: '',
+            isLoading: false,
+            showSuccessModal: false,
             submitted: false,
             // resetSuccess: false
         }
@@ -158,56 +199,6 @@ export default {
             }
             return status;
         },
-        // async getAccess(){
-        //     // const token = this.$route.params.tokenReset
-        //     // if(token && token !== '') {
-        //     try {
-        //         const response = await this.$axios.get('api/auth/admin/new-password');
-        //         if (response.data.success) {
-        //             this.access_token = response.data.token;
-        //         } else {
-        //             console.log(response.data.message);
-        //         }
-        //     } catch (error) {
-        //         alert('Data tidak valid')
-        //     }
-        // },
-        // async resetPassword() {
-        //     this.submitted = true;
-        //     if (this.isValid()) {
-        //         const accessGranted = await this.getAccess();
-        //         if (!accessGranted) {
-        //             alert('Unable to get access token.');
-        //             return;
-        //         }
-        //         const token = this.$route.params.tokenReset;
-        //         if (token && token !== '') {
-        //             try {
-        //                 const data = {
-        //                     ...this.resetpass,
-        //                     reset_pass_token: token,
-        //                     token: this.access_token  
-        //                 };
-        //                 const response = await this.$axios.post(
-        //                     'api/auth/admin/new-password',
-        //                     data
-        //                 );
-        //                 if (response.data.success) {
-        //                     alert('Reset Password Berhasil');
-        //                     this.$router.push('/login'); 
-        //                 } else {
-        //                     console.error(response.data.message);
-        //                     alert('Gagal Mengirim Data');
-        //                 }
-        //             } catch (error) {
-        //                 console.error(error);
-        //                 alert('Data Tidak Valid');
-        //             }
-        //         } else {
-        //             alert('Token Reset tidak ditemukan.');
-        //         }
-        //     }
-        // }
         async resetPassword() {
             this.submitted = true
             if (this.isValid()) {
@@ -230,11 +221,15 @@ export default {
                             )
                             if (response.data.success) {
                                 // this.resetSuccess = true
-
-                                alert('Reset Password Berhasil')
+                                // alert('Reset Password Berhasil')
+                                this.isLoading = true
+                                setTimeout(() => {
+                                    this.isLoading = false;
+                                    // this.showSuccessModal = true;
+                                }, 2000)
                                 this.$router.push('/login')
                             } else {
-                                console.log(response.data.message)
+                                alert('Silahkan refresh kembali halaman ini')
                             }
                         } catch (error) {
                             console.error(error);
@@ -248,8 +243,10 @@ export default {
                     alert(error.message);
                 }
             } 
+        },
+        closeModal() {
+            this.showSuccessModal = false;
         } 
     }
 }
 </script>
-

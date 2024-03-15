@@ -1,20 +1,26 @@
 export const PIC = [
     {
+        id: 1,
         nama: "Matthew Moore",
         email: "matthew@cyberarmy.id",
         role: "PIC",
-        departemen: "IT"
+        divisi: "IT",
+        status: "Aktif"
     },
     {
+        id: 2,
         nama: "Robert Clark",
         email: "null@cyberarmy.id",
         role: "PIC",
-        departemen: "kreatif"
+        divisi: "kreatif",
+        status: "Aktif"
     },
     {
+        id: 3,
         nama: "Michael Johnson",
         email: "null@cyberarmy.id",
         role: "PIC",
-        departemen: "keuangan"
+        divisi: "keuangan",
+        status: "Aktif"
     },
 ];

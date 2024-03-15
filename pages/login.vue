@@ -2,12 +2,12 @@
   <div class="min-h-screen flex items-center justify-center py-3 px-4 sm:px-6 lg:px-8">
      <div class="max-w-md w-full space-y-8">
        <div class="flex flex-col justify-center text-center">
-         <h2 class="mt-6 text-3xl font-bold text-gray-900">
+         <h2 class="mt-3 text-3xl font-bold text-gray-900">
            Selamat Datang
          </h2>
          <p class="mt-2 text-sm"> Silakan masuk untuk mengakses Objective Key Results. <br/>Mari kita jelajahi bersama dan kejar kesuksesan bersama-sama!</p>
        </div>
-       <form @submit.prevent="userLogin" class="flex flex-col bg-white rounded-lg w-auto px-10 py-4 shadow-md h-auto mt-2 space-y-6">
+       <form @submit.prevent="userLogin" class="flex flex-col bg-white rounded-lg w-auto px-8 py-3 shadow-md h-auto mt-2 space-y-3">
          <input type="hidden" name="remember" value="true">
          <div>
            <div class="flex flex-col">
@@ -23,7 +23,7 @@
            </div>
          </div>
          <div class="flex justify-center">
-           <button type="submit" class="relative w-[150px] mt-4 mb-3 py-2 px-4 border border-transparent text-sm font-semibold rounded-md text-white bg-[#191F2F] focus:outline-none focus:ring-2">
+           <button type="submit" class="relative w-[150px] mt-2 mb-3 py-2 px-4 border border-transparent text-sm font-semibold rounded-md text-white bg-[#191F2F] focus:outline-none focus:ring-2">
              Masuk
            </button>
          </div>
