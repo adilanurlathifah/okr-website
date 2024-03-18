@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <p>Hello</p>
     </div>
 </template>
 
@@ -9,7 +9,3 @@
         
     }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

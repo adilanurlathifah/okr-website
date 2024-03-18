@@ -9,12 +9,12 @@ export const mutations = {
 }
 
 export const actions = {
-  async login({ commit }, loginData) {
-    try {
-      const response = await this.$axios.$post('/api/auth/admin/login', loginData)
-      commit('setAuthData', response.data)
-    } catch (err) {
-      console.error(err)
-    }
-  }
+  // async login({ commit }, loginData) {
+  //   try {
+  //     const response = await this.$axios.$post('/api/auth/admin/login', loginData)
+  //     commit('setAuthData', response.data)
+  //   } catch (err) {
+  //     console.error(err)
+  //   }
+  // }
 }

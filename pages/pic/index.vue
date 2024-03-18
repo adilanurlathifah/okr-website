@@ -190,7 +190,7 @@
   import InfoDashboard from '@/components/UI/InfoDashboard.vue';
   
   export default {
-    auth: false,
+    middleware: 'auth',
     layout: 'default-admin',
     components: { VCard, BlueButton, ModalMessage, InfoDashboard },
     data() {

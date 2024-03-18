@@ -1,10 +1,10 @@
 <template>
     <div class="min-h-screen flex bg-slate-100">
       <MobileMenu v-show="showMobileMenu" @closeMobileMenu="showMobileMenu = false" />
-      <Navbar @showMobileMenu="showMobileMenu = true"/>
-      <Sidebar class="mt-20"/>
+      <Navbar @toggle-mobile-menu="toggleMobileMenu" @showMobileMenu="showMobileMenu = true"/>
+      <Sidebar class="mt-16"/>
       <main class="flex-1 mt-20 p-3 md:p-4 lg:p-6 w-full">
-       <nuxt/>
+        <nuxt/>
       </main>
     </div>
 </template>
@@ -27,6 +27,9 @@ export default {
       },
     },
     methods: {
+      toggleMobileMenu() {
+        this.showMobileMenu = !this.showMobileMenu;
+      },
       closeMobileMenu() {
         this.showMobileMenu = false;
       },

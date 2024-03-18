@@ -21,8 +21,6 @@ export default {
     { src: "~plugins/v-calendar.js", ssr: false },
     { src: "~/plugins/vue-tailwind.client.js" },
     { src: "~/plugins/vue-sweetalert2.js" },
-    { src: "@/services/get-access-token", mode: "client" },
-    { src: "~/plugins/axios.js"},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -71,7 +69,7 @@ export default {
       global: true,
     },
     strategies: {
-      localUser: {
+      localAdmin: {
         scheme: "local",
         token: {
           property: "data.token",
@@ -94,15 +92,16 @@ export default {
       },
     },
   },
-  router: {
-    extendRoutes(routes, resolve) {
-      routes.push({
-        name: "admin",
-        path: "/",
-        component: resolve(__dirname, "pages/admin/index.vue"),
-      });
-    },
-  },
+  // router: {
+  //   extendRoutes(routes, resolve) {
+  //     routes.push({
+  //       name: "admin",
+  //       path: "/",
+  //       component: resolve(__dirname, "pages/admin/index.vue"),
+  //     });
+  //   },
+  //   // middleware: ['auth'],
+  // },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 };
