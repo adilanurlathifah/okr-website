@@ -10,7 +10,7 @@
         </div>
         <VCard>
             <div v-if="dataOKR.length > 0">
-              <div class="flex flex-col md:flex-row gap-2 mt-2 md:px-2 px-4 justify-between items-center">
+              <div class="flex flex-col md:flex-row gap-2 pt-8 md:px-2 px-4 justify-between items-center">
                     <div class="flex justify-center w-full md:w-auto">
                         <div class="relative w-full">
                             <div class="absolute inset-y-0 flex items-center ps-3 pointer-events-none">

@@ -10,7 +10,7 @@
         </div>
         <VCard>
             <div v-if="data.length > 0">
-              <div class="flex flex-row gap-2 mt-2 justify-between">
+              <div class="flex flex-row gap-2 pt-8 justify-between">
                 <div class="flex flex-row">
                   <div class="relative ml-4">
                       <div class="absolute inset-y-0 flex items-center ps-3 pointer-events-none">

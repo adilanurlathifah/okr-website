@@ -10,7 +10,7 @@
         </div>
         <VCard>
             <div v-if="dataPosisi.length > 0">
-              <div class="flex flex-col md:flex-row gap-2 mt-2 md:px-2 px-4 justify-between items-center">
+              <div class="flex flex-col md:flex-row gap-3 pt-8 md:px-2 px-4 justify-between items-center">
                     <div class="flex justify-center w-full md:w-auto">
                         <div class="relative w-full">
                             <div class="absolute inset-y-0 flex items-center ps-3 pointer-events-none">
@@ -24,8 +24,8 @@
                                 required>
                         </div>
                     </div>
-                    <div class="flex flex-col md:flex-row justify-end gap-3 w-full md:w-auto">
-                        <div class="flex flex-col md:flex-row gap-1 w-full md:w-auto">
+                    <div class="flex flex-col md:flex-row justify-end gap-20 w-full md:w-auto">
+                        <div class="flex flex-col md:flex-row gap-10 pr-24 w-full md:w-auto">
                           <select id="divisi" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
                             <option value="">Divisi</option>
                             <option value="developer">Developer</option>
@@ -33,7 +33,7 @@
                             <option value="finance">Finance</option>
                          </select>
                         </div>
-                        <div class="flex flex-col md:flex-row gap-1 w-full md:w-auto">
+                        <div class="flex flex-col md:flex-row gap-10 pr-12 w-full md:w-auto">
                           <select id="status" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
                               <option value="">Semua Status</option>
                               <option value="aktif">Aktif</option>

@@ -10,9 +10,10 @@
         </div>
         <VCard>
             <div v-if="categories.length > 0">
-              <div class="flex flex-row gap-2 mt-2 justify-between">
+              <div class="flex flex-row pt-8 gap-2  justify-between">
                 <div class="flex flex-row">
                   <div class="relative ml-4">
+
                       <div class="absolute inset-y-0 flex items-center ps-3 pointer-events-none">
                         <img src="~/assets/img/icons/search.svg"/>
                       </div>
