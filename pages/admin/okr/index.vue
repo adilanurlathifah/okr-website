@@ -26,7 +26,7 @@
                     </div>
                     <div class="flex flex-col md:flex-row justify-end gap-3 w-full md:w-auto">
                         <div class="flex flex-col md:flex-row gap-1 w-full md:w-auto">
-                            <select id="tahun" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full md:w-auto h-[45px] pr-2 p-2">
+                            <select id="tahun" class="font-semibold focus:outline-none  border border-[#95999D] hover:bg-[#E3E8FF] focus border focus:border-[#B7C0D8] text-[15px] rounded-lg block w-full md:w-auto h-[45px] pr-2 p-2">
                                 <option value="">Tahun</option>
                                 <option value="2024">2024</option>
                                 <option value="2024">2023</option>
@@ -35,7 +35,7 @@
                             </select>
                             <img src="~/assets/img/icons/calendar.svg" class="hidden md:block object-contain w-[20px] h-full mr-3" alt=""/>
                         </div>
-                        <select id="posisi" class="font-normal focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full md:w-auto h-[45px] p-2">
+                        <select id="posisi" class="font-normal focus:outline-none  border border-[#95999D] hover:bg-[#E3E8FF] focus border focus:border-[#B7C0D8] text-[15px] rounded-lg block w-full md:w-auto h-[45px] p-2">
                             <option value="">Posisi</option>
                             <option value="backend">Back-End Developer</option>
                             <option value="backend">DevOps</option>
@@ -43,7 +43,7 @@
                             <option value="backend">Quality Assurance</option>
                             <option value="backend">UI/UX Designer</option>
                         </select>
-                        <select id="status" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full h-[45px] p-2">
+                        <select id="status" class="font-semibold focus:outline-none  border border-[#95999D] hover:bg-[#E3E8FF] focus border focus:border-[#B7C0D8] text-[15px] rounded-lg block w-full h-[45px] p-2">
                             <option value="">Semua Status</option>
                             <option value="aktif">Aktif</option>
                             <option value="nonaktif">Tidak Aktif</option>

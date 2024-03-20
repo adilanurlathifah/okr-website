@@ -24,17 +24,17 @@
                                 required>
                         </div>
                     </div>
-                    <div class="flex flex-col md:flex-row justify-end gap-20 w-full md:w-auto">
-                        <div class="flex flex-col md:flex-row gap-10 pr-24 w-full md:w-auto">
-                          <select id="divisi" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
+                    <div class="flex flex-col md:flex-row justify-end gap-3 w-full md:w-auto">
+                        <div class="flex flex-col md:flex-row  w-full md:w-auto">
+                          <select id="divisi" class="font-semibold focus:outline-none  border border-[#95999D] hover:bg-[#E3E8FF] focus border focus:border-[#B7C0D8] text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
                             <option value="">Divisi</option>
                             <option value="developer">Developer</option>
                             <option value="kreatif">Kreatif</option>
                             <option value="finance">Finance</option>
                          </select>
                         </div>
-                        <div class="flex flex-col md:flex-row gap-10 pr-12 w-full md:w-auto">
-                          <select id="status" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
+                        <div class="flex flex-col md:flex-row w-full md:w-auto">
+                          <select id="status" class="font-semibold focus:outline-none  border border-[#95999D] hover:bg-[#E3E8FF] focus border focus:border-[#B7C0D8] text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
                               <option value="">Semua Status</option>
                               <option value="aktif">Aktif</option>
                               <option value="nonaktif">Tidak Aktif</option>

@@ -130,9 +130,9 @@
                       required>
                   </div>
                 </div>
-                <div class="flex flex-col md:flex-row justify-end gap-3">
+                <div class="flex flex-col md:flex-row pt-8 justify-end gap-3">
                     <div class="flex flex-row gap-1">
-                      <select id="posisi" class="font-normal focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
+                      <select id="posisi" class="font-normal focus:outline-none  border border-[#95999D] hover:bg-[#E3E8FF] focus border focus:border-[#B7C0D8] text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
                           <option value="">Posisi</option>
                           <option value="backend">Back-End Developer</option>
                           <option value="backend">DevOps</option>
@@ -140,7 +140,7 @@
                           <option value="backend">Quality Assurance</option>
                           <option value="backend">UI/UX Designer</option>
                       </select>
-                      <select id="periode" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 mr-2">
+                      <select id="periode" class="font-semibold focus:outline-none border border-[#95999D] hover:bg-[#E3E8FF] focus border focus:border-[#B7C0D8] text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 mr-2">
                           <option value="">Periode</option>
                           <option value="januari">Januari</option>
                           <option value="februari">Februari</option>

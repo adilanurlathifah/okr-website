@@ -26,7 +26,7 @@
                 </div>
                 <div class="flex justify-end gap-3 mr-6">
                   <div>
-                    <select id="posisi" class="font-normal focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
+                    <select id="posisi" class="font-normal focus:outline-none  border border-[#95999D] hover:bg-[#E3E8FF] focus border focus:border-[#B7C0D8] text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
                       <option value="">Posisi</option>
                       <option value="backend">Back-End Developer</option>
                       <option value="backend">DevOps</option>
@@ -36,7 +36,7 @@
                     </select>
                   </div>
                   <div>
-                    <select id="divisi" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
+                    <select id="divisi" class="font-semibold focus:outline-none  border border-[#95999D] hover:bg-[#E3E8FF] focus border focus:border-[#B7C0D8] text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
                       <option value="">Divisi</option>
                       <option value="developer">Developer</option>
                       <option value="kreatif">Kreatif</option>
