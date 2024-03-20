@@ -71,7 +71,7 @@
                     Password harus minimal 8 karakter, termasuk huruf besar, huruf kecil, angka, dan karakter khusus.
                 </small> -->
                 <nuxt-link to="/admin/forgot-password">
-                    <small class="text-black text-[13px] mt-2">Lupa Password?</small>
+                    <small class="hover:text-gray-700 text-black text-[13px] mt-2">Lupa Password?</small>
                 </nuxt-link>
               </div>
             </div>
@@ -80,11 +80,6 @@
                 Masuk
               </button>
             </div>
-            <loading 
-                :active.sync="isLoading"
-                :can-cancel="false"
-                :is-full-page="false">
-            </loading>
           </form>
         </VCard>
        </div>
@@ -92,14 +87,11 @@
 </template>
 
 <script>
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
 import VCard from './UI/VCard.vue';
 export default {
-    components: { Loading, VCard },
+    components: { VCard },
     data() {
         return {
-            isLoading: false,
             submitted: false,
             login: {
                 email: "",

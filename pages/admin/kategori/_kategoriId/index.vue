@@ -1,24 +1,24 @@
 <template>
     <div>
-        <div class="m-3">
-          <h1 class="text-2xl font-bold">
+      <div class="flex flex-col mb-4">
+          <h1 class="text-xl font-bold">
             Detail Kategori   
           </h1>
-          <h5 class="text-slate-400 mt-1">
+          <p class="text-slate-400 mt-1 font-semibold text-sm text-left">
             Periksa hasil pencapaian secara rinci disini
-          </h5>
+          </p>
         </div>
         <div class="flex flex-col p-2">
-            <VCard class="flex flex-col md:flex-row md:text-base text-base justify-between px-8 py-2 items-center whitespace-nowrap">
-                <div class="flex flex-row gap-4 px-3 py-2 mb-2">
+            <VCard class="flex flex-col md:flex-row text-base sm:text-left text-center md:justify-between px-10 py-2 whitespace-nowrap">
+                <div class="flex flex-row gap-3 px-3 py-2 mb-2">
                     <p class="font-bold text-[#0C1662] capitalize">posisi</p>
                     <p class="text-slate-500 font-semibold capitalize">front-end developer</p>
                 </div>
-                <div class="flex flex-row  gap-4 px-3 py-2 mb-2">
+                <div class="flex flex-row gap-3 px-3 py-2 mb-2">
                     <p class="font-bold text-[#0C1662] capitalize">kategori</p>
                     <p class="text-slate-500 font-semibold capitalize">kehadiran</p>
                 </div>
-                <div class="flex flex-row  gap-4 px-3 py-2 mb-2">
+                <div class="flex flex-row gap-3 px-3 py-2 mb-2">
                     <p class="font-bold text-[#0C1662] capitalize">divisi</p>
                     <p class="text-slate-500 font-semibold capitalize">developer</p>
                 </div>
@@ -34,14 +34,14 @@
                             <input 
                                 type="search" 
                                 id="default-search" 
-                                class="block w-full md:w-[350px] border border-slate-200 focus:outline-slate-200 h-[45px] p-2 ps-10 text-[15px] font-medium text-gray-900 rounded-lg bg-gray-50" 
+                                class="block w-full md:w-[350px] border border-slate-200 focus:outline-slate-200 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 rounded-lg bg-gray-50" 
                                 placeholder="Cari OKR" 
                                 required>
                         </div>
                     </div>
                     <div class="flex flex-col md:flex-row justify-end gap-3 w-full md:w-auto">
                         <div class="flex flex-col md:flex-row gap-1 w-full md:w-auto">
-                            <select id="tahun" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full md:w-auto h-[45px] pr-2 p-2">
+                            <select id="tahun" class="font-semibold focus:outline-none border border-[#95999D] focus:border focus:border-[#B7C0D8] hover:bg-[#E3E8FF] text-sm rounded-lg block w-full md:w-auto h-[45px] pr-2 p-2">
                                 <option value="">Tahun</option>
                                 <option value="2024">2024</option>
                                 <option value="2024">2023</option>
@@ -112,13 +112,13 @@
                               <input 
                                   type="search" 
                                   id="default-search" 
-                                  class="hover:cursor-not-allowed border border-slate-200  block w-full lg:w-[350px] h-[45px] p-2 ps-10 text-[15px] font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
+                                  class="hover:cursor-not-allowed border border-slate-200  block w-full lg:w-[350px] h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
                                   placeholder="Cari" 
                                   :disabled="true">
                           </div>
                       </div>
                       <div class="flex justify-end gap-3 mr-6">
-                          <select id="tahun" class="font-normal hover:cursor-not-allowed hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2" :disabled="true">
+                          <select id="tahun" class="font-normal hover:cursor-not-allowed hover:bg-[#E3E8FF] text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2" :disabled="true">
                               <option value="">Tahun</option>
                               <option value="2024">2024</option>
                               <option value="2024">2023</option>

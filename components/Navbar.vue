@@ -4,6 +4,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex justify-start gap-6">
                     <img 
+                        v-if="$auth.loggedIn"
                         src="~/assets/img/icons/menu.svg"
                         class="block md:hidden w-6 h-full object-contain"
                         alt="toggle mobile-menu"

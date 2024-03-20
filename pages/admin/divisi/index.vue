@@ -1,86 +1,94 @@
 <template>
     <div>
-        <div class="m-3">
-          <h1 class="text-2xl font-bold">
+        <div class="flex flex-col mb-4">
+          <h1 class="text-xl font-bold">
             Divisi   
           </h1>
-          <h5 class="text-slate-400 mt-1">
+          <p class="text-slate-400 mt-1 font-semibold text-sm text-left">
             Anda bisa menambah ataupun mengaktifkan kategori divisi disini
-          </h5>
+          </p>
         </div>
-        <VCard>
-            <div v-if="dataDivisi.length > 0">
+        <AlertBox 
+          :message="'Divisi Creative berhasil ditambahkan'" 
+          :isSuccess="isSuccess"/>
+        <VCard class="px-3 py-4">
+            <div v-if="displayedDivisions.length > 0">
               <div class="flex flex-col md:flex-row gap-2 mt-2 md:px-2 px-4 justify-between items-center">
                 <div class="flex justify-center w-full md:w-auto">
-                  <div class="relative w-full">
+                    <div class="relative w-full">
                       <div class="absolute inset-y-0 flex items-center ps-3 pointer-events-none">
                           <img src="~/assets/img/icons/search.svg"/>
                       </div>
                       <input 
                           type="search" 
                           id="default-search" 
-                          class="block w-full md:w-[350px] border border-slate-200 focus:outline-slate-200 h-[45px] p-2 ps-10 text-[15px] font-medium text-gray-900 rounded-lg bg-gray-50" 
-                          placeholder="Cari OKR" 
-                          required>
-                  </div>
+                          class="block w-full md:w-[350px] border border-slate-200 focus:outline-slate-200 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 rounded-lg bg-gray-50" 
+                          placeholder="Cari Divisi">
+                    </div>
                   </div>
                   <div class="flex flex-col md:flex-row justify-end gap-3 w-full md:w-auto">
                       <div class="flex flex-col md:flex-row gap-1 w-full md:w-auto">
-                        <select id="status" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
+                        <select id="status" class="font-semibold focus:outline-none border border-[#95999D] focus:border focus:border-[#B7C0D8] hover:bg-[#E3E8FF] text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2">
                             <option value="">Semua Status</option>
                             <option value="aktif">Aktif</option>
                             <option value="nonaktif">Tidak Aktif</option>
                         </select>
                       </div>
-                      <BlueButton class="save-btn" @click="showModal = true" :showIcon="true">
-                          <template v-slot:message>Tambah Divisi</template>
+                      <BlueButton class="save-btn" @click="openAddDivisiModal" :showIcon="true">
+                        <template v-slot:message>Tambah Divisi</template>
                       </BlueButton>
+                      <AddDivisi v-show="showAddDivisiModal" @divisi="handleDivisi" @close-modal="closeAddDivisiModal"/>
                   </div> 
                 </div>
-              <div class="container px-5 py-6 mb-10">
-                <div class="flex flex-row">
-                  <table class="table w-full h-auto responsive-table">
-                    <thead>
-                      <tr class="mb-2 text-center text-[#0C1662]">
-                        <th class="py-3">No</th>
-                        <th>Divisi</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
+                <div class="overflow-auto rounded-lg shadow mt-8">
+                  <table class="w-full">
+                    <thead class="bg-gray-50 border-b-2 border-gray-100">
+                      <tr class="text-left text-[#0C1662] font-bold md:text-center">
+                        <th class="w-20 p-3 text-sm tracking-wide hidden md:table-cell">No.</th>
+                        <th class="w-20 p-3 text-sm tracking-wide hidden md:table-cell">Divisi</th>
+                        <th class="w-24 p-3 text-sm tracking-wide hidden md:table-cell">Status</th>
+                        <th class="w-24 p-3 text-sm tracking-wide hidden md:table-cell">Aksi</th>
                       </tr>
                     </thead>
-                    <tbody class="text-center">
-                      <tr class="hover:bg-slate-50" v-for="data in dataDivisi" :key="data.id">
-                        <td class="py-3">{{data.id}}</td>
-                        <td>{{data.divisi}}</td>
-                        <td>
+                    <tbody class="divide-y divide-gray-100">
+                      <tr class="text-left md:text-center bg-white block md:table-row" v-for="(data, index) in displayedDivisions" :key="data.id">
+                        <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="id">{{ index + 1 }}</td>
+                        <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="total">{{ data.name }}</td>
+                        <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="status">
                           <t-tag 
-                              v-show="data.status === 'Aktif'"
+                              v-show="data.status === 'actived'"
                               variant="success"
                           >
                               {{data.status}}
                           </t-tag>
                           <t-tag 
-                              v-show="data.status === 'Nonaktif'"
+                              v-show="data.status === 'inactived'"
                               variant="danger"
                           >
                               {{data.status}}
                           </t-tag>
                         </td>
-                        <td>
-                          <button class="bg-black rounded-md p-2">
-                              <img src="~/assets/img/icons/edit.svg" />
+                        <td class="p-3 text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="total">
+                          <button class="bg-black rounded-md p-2" @click="editDivision(data.id)">
+                            <img src="~/assets/img/icons/edit.svg" />
                           </button>
+                          <EditDivisi 
+                            v-show="showEditDivisiModal" 
+                            :name="selectedDivision.name"
+                            @divisi="updateDivision" 
+                            @close-modal="closeEditDivisiModal"
+                          />
                           <button 
                               class="bg-red-700 rounded-md p-2"
-                              v-if="data.status === 'Aktif'"
-                              @click="changeStatus(data, 'Nonaktif')"
+                              v-if="data.status === 'actived'"
+                              @click="changeStatus(data, 'inactived')"
                           >
                               <img src="~/assets/img/icons/cancel.svg" />
                           </button>
                           <button 
                               class="bg-green-700 rounded-md p-2"
-                              v-if="data.status === 'Nonaktif'"
-                              @click="changeStatus(data, 'Aktif')"
+                              v-if="data.status === 'inactived'"
+                              @click="changeStatus(data, 'actived')"
                           >
                               <img src="~/assets/img/icons/checklist.svg" />
                           </button>
@@ -88,16 +96,15 @@
                       </tr>
                     </tbody>
                   </table>
-                  </div>
-                  <div class="mt-8 mr-2 flex justify-end">
-                    <t-pagination
-                      class="responsivePagination"
-                      :value="1"
-                      :perPage="5"
-                      :limit="2"
-                      :totalItems="5"
-                    />
-                  </div>
+              </div>
+              <div class="mt-8 mr-2 flex justify-end">
+                <t-pagination
+                  class="responsivePagination"
+                  :value="currentPage"
+                  :per-page="perPage"
+                  :total-items="totalItems"
+                  @change="handlePageChange"
+                />
               </div>
             </div>
         <div v-else class="flex flex-col p-3">
@@ -110,20 +117,20 @@
                     <input 
                       type="search" 
                       id="default-search" 
-                      class="block w-full lg:w-[350px] cursor-not-allowed border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-[15px] font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
+                      class="block w-full lg:w-[350px] cursor-not-allowed border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
                       placeholder="Cari Divisi" 
                       :disabled="true">
                   </div>
                 </div>
                 <div class="flex flex-col md:flex-row justify-end gap-3">
                       <div class="flex flex-col md:flex-row gap-1">
-                        <select id="status" class="font-semibold cursor-not-allowed focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2" :disabled="true">
+                        <select id="status" class="font-semibold cursor-not-allowed focus:outline-none hover:bg-slate-100 text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2" :disabled="true">
                           <option value="">Semua Status</option>
                           <option value="aktif">Aktif</option>
                           <option value="nonaktif">Tidak Aktif</option>
                       </select>
                     </div>
-                    <BlueButton class="save-btn" @click="showModal = true" :showIcon="true">
+                    <BlueButton class="save-btn" @click="showAddDivisiModal = true" :showIcon="true">
                         <template v-slot:message>Tambah Divisi</template>
                     </BlueButton>
                 </div> 
@@ -136,172 +143,143 @@
               </div>
             </div>
         </VCard>
-        <ModalMessage v-show="showModal" @close-modal="showModal = false">
-          <div class="flex flex-col">
-            <h1 class="font-bold text-xl ml-6 text-left">Tambah OKR</h1>
-            <div class="flex flex-col justify-center mt-3 px-6">
-              <label class="font-semibold text-left text-base my-2">Kategori</label>
-              <div class="flex flex-row">
-                <select id="kategori" class="w-[450px] border border-slate-300 px-3 focus:outline-slate-300 block h-[45px] text-[15px] font-medium text-gray-900 rounded-lg" >
-                  <option value="">Pilih Kategori</option>
-                  <option value="kehadiran">Kehadiran</option>
-                  <option value="performa">Performa</option>
-                  <option value="kualitas">Kualitas</option>
-                  <option value="produktivitas">Produktivitas</option>
-                </select>
-              </div>
-            </div>
-            <div class="flex flex-col justify-center mt-3 px-6">
-                <label class="font-semibold text-left text-base my-2">Total</label>
-                <input 
-                  type="input" 
-                  class="w-[450px] focus:outline-slate-300 block h-[45px] p-2 text-[15px] font-medium text-gray-900 rounded-lg border border-slate-300" 
-                  placeholder="Masukan Total OKR" 
-                  required
-                >
-            </div>
-            <div class="flex flex-col justify-center mt-3 px-6">
-              <label class="font-semibold text-left text-base my-2">Kategori</label>
-              <div class="flex flex-row gap-3">
-                  <select id="periode" class="w-[450px] border border-slate-300 px-3 focus:outline-slate-300 block h-[45px] text-[15px] font-medium text-gray-900 rounded-lg">
-                      <option value="">Pilih Periode</option>
-                      <option value="januari">Januari</option>
-                      <option value="februari">Februari</option>
-                      <option value="maret">Maret</option>
-                      <option value="april">April</option>
-                      <option value="mei">Mei</option>
-                      <option value="juni">Juni</option>
-                      <option value="juli">Juli</option>
-                      <option value="agustus">Agustus</option>
-                      <option value="september">September</option>
-                      <option value="oktober">Oktober</option>
-                      <option value="november">November</option>
-                      <option value="desember">Desember</option>
-                  </select>
-                  <select id="tahun" class="w-[450px] border border-slate-300 px-3 focus:outline-slate-300 block h-[45px] text-[15px] font-medium text-gray-900 rounded-lg">
-                    <option value="">Tahun</option>
-                    <option value="2024">2024</option>
-                    <option value="2024">2023</option>
-                    <option value="2024">2022</option>
-                  </select>
-                </div>
-            </div>
-          </div>
-          <div class="flex flex-row justify-end gap-2 pt-10 pb-3 pr-6">
-            <BlueButton 
-              :button-color="false" 
-              @click="tambahOKR" 
-              :showIcon="false" 
-              icon-color="#ffffff"
-              class="text-white"
-            >
-                <template v-slot:message>Tambah Data OKR</template>
-            </BlueButton>
-            <button 
-              type="button" 
-              class="flex flex-row font-semibold text-base md:text-[15px] text-black text-center border border-black rounded-md w-auto h-[45px] px-6 py-3 shadow-sm gap-2 whitespace-nowrap"
-              @click="showModal = false">
-                  Batal
-            </button>
-          </div>
-        </ModalMessage>
     </div>
 </template>
   
 <script>
-import { divisi } from '@/models/divisi'
 import VCard from '@/components/UI/VCard.vue';
 import BlueButton from '@/components/UI/BlueButton.vue';
-import ModalMessage from '@/components/UI/ModalMessage.vue';
+import AddDivisi from '@/components/Modals/Divisi/ModalAddDivisi.vue';
+import EditDivisi from '../../../components/Modals/Divisi/ModalEditDivisi.vue';
+import AlertBox from '@/components/UI/AlertBox.vue';
 
 export default {
-    auth: false,
+    middleware: 'auth',
     layout: 'default-admin',
-    components: { VCard, BlueButton, ModalMessage },
+    components: { VCard, BlueButton, AddDivisi, EditDivisi, AlertBox },
     data() {
-        return {
-            dataDivisi: divisi,
-            showModal: false
-        }
+      return {
+          name: "",
+          divisions: [],
+          items: [],
+          showAddDivisiModal: false,
+          showEditDivisiModal: false,
+          selectedDivision: {},
+          isSuccess: false,
+          currentPage: 1,
+          perPage: 10,
+          totalItems: 0,
+          search: "",
+          status: 'actived'
+      }
+    },
+    mounted() {
+      this.fetchDivisions()
+    },
+    computed: {
+      displayedDivisions() {
+        return this.divisions;
+      }
     },
     methods: {
-        changeStatus(data, newStatus) {
-            data.status = newStatus;
-        },
-        tambahOKR() {
-            this.showModal = true;
-        },
-        closeModal() {
-            this.showModal = false;
+      openAddDivisiModal() {
+          this.showAddDivisiModal = true;
+      },
+      closeAddDivisiModal() {
+          this.showAddDivisiModal = false;
+      },
+      openEditDivisiModal() {
+          this.showEditDivisiModal = true;
+      },
+      closeEditDivisiModal() {
+          this.showEditDivisiModal = false;
+      },
+      async editDivision(id) {
+        // const division = this.divisions.find(div => div.id === id);
+        // if (division) {
+        //   this.selectedDivision = division;
+        //   this.showEditDivisiModal = true; 
+          
+        // } else {
+        //   alert(`Division with ID: ${id} not found.`);
+        // }
+
+        try {
+          const tokenResponse = await this.$axios.$get('/api/admin/divisions/update');
+          const token = tokenResponse.data.token;
+
+          const division = this.divisions.find(div => div.id === id);
+          if (!division) {
+              throw new Error(`Division with ID: ${id} not found.`);
+          }
+
+          this.selectedDivision = { ...division, token };
+          this.showEditDivisiModal = true;
+        } catch (error) {
+          console.error('Error fetching the token or finding the division:', error);
+          alert(error.message);
         }
+      },
+      async updateDivision() {
+        try {
+            const res = await this.$axios.post('/api/admin/divisions/update/', {
+                id: this.selectedDivision.id,
+                name: this.selectedDivision.name,
+                token: this.selectedDivision.token,
+            });
+
+            if (res.data.success) {
+                const index = this.divisions.findIndex(div => div.id === this.selectedDivision.id);
+                if (index !== -1) {
+                    this.divisions[index].name = this.selectedDivision.name;
+                }
+                this.showEditDivisiModal = false;
+            } else {
+                console.error('Failed to update the division');
+            }
+        } catch (error) {
+            console.error(error);
+            alert(error.message);
+        }
+      },
+      async fetchDivisions() {
+        try {
+            const response = await this.$axios.$get('/api/admin/divisions?limit&search&status=actived')
+            this.divisions = response.data.divisions.data.reverse();
+            this.totalItems = response.data.divisions.total; 
+        } catch (error) {
+            console.error('Failed to fetch divisions:', error);
+        }
+      },
+      handlePageChange(newPage) {
+        this.currentPage = newPage;
+        this.fetchDivisions();
+      },
+      changeStatus(data, newStatus) {
+          data.status = newStatus;
+      },
+      async handleDivisi(name) {
+        try {
+          const tokenResponse = await this.$axios.$get('/api/admin/divisions/create');
+          const token = tokenResponse.data.token;
+          const res = await this.$axios.post('api/admin/divisions/create', {
+              name: name,
+              token: token,
+          });
+
+          if (res.success) {
+            this.divisions.push({ 
+              name: name
+            });
+            this.showAddDivisiModal = false;
+          } else {
+            console.error('Failed to post new division');
+          }
+        } catch (error) {
+          console.error(error);
+          alert(error.message);
+        }
+      },
     }
 }
 </script>
-  
-  <style>
-  #posisi {
-    font-weight: 600;
-  }
-  
-  @media (max-width:  1150px) {
-    .responsive-table,
-    .responsive-table thead,
-    .responsive-table tbody,
-    .responsive-table th,
-    .responsive-table td,
-    .responsive-table tr,
-    .responsivePagination {
-      display: block;
-      padding: 2px;
-    }
-  
-    .responsivePagination {
-      display: flex;
-      justify-content: flex-end;
-    }
-  
-    .responsive-table th {
-      font-weight: 800;
-    }
-  
-    .responsive-table thead tr {
-      position: absolute;
-      top: -9999px;
-      left: -9999px;
-    }
-    
-    .responsive-table tr { 
-        border: 1px solid #e4e3e3;
-    }
-  
-    .responsive-table td {
-      border: none;
-      border-bottom:  1px solid #eee;
-      position: relative;
-      padding-left:  50%;
-    }
-  
-    .responsive-table td:before {
-      position: absolute;
-      top:  6px;
-      left:  6px;
-      width:  45%;
-      padding-right:  10px;
-      font-weight: 600;
-      color: #191F2F;
-      white-space: nowrap;
-    }
-  
-    .responsive-table td:nth-of-type(1):before { content: "No"; }
-    .responsive-table td:nth-of-type(2):before { content: "Posisi"; }
-    .responsive-table td:nth-of-type(3):before { content: "Divisi"; }
-    .responsive-table td:nth-of-type(4):before { content: "Status"; }
-    .responsive-table td:nth-of-type(5):before { content: "Aksi"; }
-  }
-  
-  @media (min-width:  1800px) {
-    .responsive-table {
-      width:  100%;
-    }
-  }
-</style>

@@ -2,7 +2,7 @@
    <div>
     <div class="relative">
       <div v-if="showMobileMenu" @click="closeMobileMenu" class="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-40"></div>
-        <div v-if="showMobileMenu" class="fixed w-60 h-screen z-50 bg-black px-2 py-6">
+        <div v-if="showMobileMenu" class="fixed w-60 h-full z-50 bg-black px-2 py-6">
           <ul class="list-none">
           <li class="relative">
               <nuxt-link to="/admin/" class="flex h-12 items-center px-3 py-4 transition duration-300 ease-linear hover:bg-[#484D59]">

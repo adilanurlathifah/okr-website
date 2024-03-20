@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 h-screen bg-gray-100">
      <h1 class="text-xl mb-2">Your orders</h1>
-     <div class="overflow-auto rounded-lg shadow">
+     <!-- <div class="overflow-auto rounded-lg shadow">
        <table class="w-full">
          <thead class="bg-gray-50 border-b-2 border-gray-100">
          <tr>
@@ -28,19 +28,20 @@
          </tr>
          </tbody>
        </table>
-     </div>
+     </div> -->
   </div>
 </template>
  
 <script>
  import VCard from '../components/UI/VCard.vue';
  import { PIC } from '../models/PIC.js';
+ import AlertBox from '../components/UI/AlertBox.vue';
  
  export default {
   name: 'IndexPage',
   layout: 'default-admin',
   middleware: 'auth',
-  components: { VCard },
+  components: { VCard, AlertBox },
   data() {
      return {
        PIC: PIC

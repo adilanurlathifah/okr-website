@@ -1,14 +1,14 @@
 <template>
     <div>
-        <div class="m-3">
-          <h1 class="text-2xl font-bold">
+      <div class="flex flex-col mb-4">
+          <h1 class="text-xl font-bold">
             Objective Key Results   
           </h1>
-          <h5 class="text-slate-400 mt-1">
+          <p class="text-slate-400 mt-1 font-semibold text-sm text-left">
             Periksa kategorimu disini, mengaktifkan ataupun menonaktifkan
-          </h5>
+          </p>
         </div>
-        <VCard>
+        <VCard class="p-3">
             <div v-if="dataOKR.length > 0">
               <div class="flex flex-col md:flex-row gap-2 mt-2 md:px-2 px-4 justify-between items-center">
                     <div class="flex justify-center w-full md:w-auto">
@@ -19,14 +19,15 @@
                             <input 
                                 type="search" 
                                 id="default-search" 
-                                class="block w-full lg:w-[350px] border border-slate-200 focus:outline-slate-200 h-[45px] p-2 ps-10 text-[15px] font-medium text-gray-900 rounded-lg bg-gray-50" 
+                                class="block w-full lg:w-[250px] border border-slate-200 focus:outline-slate-200 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 rounded-lg bg-gray-50" 
                                 placeholder="Cari OKR" 
                                 required>
                         </div>
                     </div>
                     <div class="flex flex-col md:flex-row justify-end gap-3 w-full md:w-auto">
-                        <div class="flex flex-col md:flex-row gap-1 w-full md:w-auto">
-                            <select id="tahun" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full md:w-auto h-[45px] pr-2 p-2">
+                      <div class="flex flex-row w-auto">
+                        <div class="flex flex-row gap-1 w-full md:w-auto">
+                            <select id="tahun" class="font-semibold focus:outline-none border border-[#95999D] focus:border focus:border-[#B7C0D8] hover:bg-[#E3E8FF] text-sm rounded-lg w-auto h-[45px] pr-2 p-2">
                                 <option value="">Tahun</option>
                                 <option value="2024">2024</option>
                                 <option value="2024">2023</option>
@@ -35,7 +36,7 @@
                             </select>
                             <img src="~/assets/img/icons/calendar.svg" class="hidden md:block object-contain w-[20px] h-full mr-3" alt=""/>
                         </div>
-                        <select id="posisi" class="font-normal focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full md:w-auto h-[45px] p-2">
+                        <select id="posisi" class="font-normal focus:outline-none border border-[#95999D] focus:border focus:border-[#B7C0D8] hover:bg-[#E3E8FF] text-sm rounded-lg w-auto h-[45px] p-2">
                             <option value="">Posisi</option>
                             <option value="backend">Back-End Developer</option>
                             <option value="backend">DevOps</option>
@@ -43,37 +44,39 @@
                             <option value="backend">Quality Assurance</option>
                             <option value="backend">UI/UX Designer</option>
                         </select>
-                        <select id="status" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full h-[45px] p-2">
-                            <option value="">Semua Status</option>
-                            <option value="aktif">Aktif</option>
-                            <option value="nonaktif">Tidak Aktif</option>
+                      </div>
+                      <div class="flex flex-row gap-4">
+                        <select id="status" class="font-semibold focus:outline-none border border-[#95999D] focus:border focus:border-[#B7C0D8] hover:bg-[#E3E8FF] text-sm rounded-lg block w-full h-[45px] p-2">
+                          <option value="">Semua Status</option>
+                          <option value="aktif">Aktif</option>
+                          <option value="nonaktif">Tidak Aktif</option>
                         </select>
                         <BlueButton @click="showModal = true" :showIcon="true">
                             <template v-slot:message>Tambah Data OKR</template>
                         </BlueButton>
+                      </div>
                         <OKRModal :show="showModal" @close="showModal = false" />
                     </div> 
                 </div>
-              <div class="container px-5 py-6 mb-10">
-                <div class="flex flex-row">
-                  <table class="table w-full h-auto responsive-table">
-                    <thead>
-                      <tr class="mb-2 text-center text-[#0C1662]">
-                        <th class="py-3">No</th>
-                        <th>Total OKR</th>
-                        <th>Kategori</th>
-                        <th>Periode</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
+                <div class="overflow-auto rounded-lg shadow mt-8">
+                  <table class="w-full">
+                    <thead class="bg-gray-50 border-b-2 border-gray-100">
+                      <tr class="text-left text-[#0C1662] font-bold md:text-center">
+                        <th class="w-20 p-3 text-sm tracking-wide hidden md:table-cell">No.</th>
+                        <th class="w-20 p-3 text-sm tracking-wide hidden md:table-cell">Total OKR</th>
+                        <th class="w-24 p-3 text-sm tracking-wide hidden md:table-cell">Kategori</th>
+                        <th class="w-24 p-3 text-sm tracking-wide hidden md:table-cell">Periode</th>
+                        <th class="w-32 p-3 text-sm tracking-wide hidden md:table-cell">Status</th>
+                        <th class="w-32 p-3 text-sm tracking-wide hidden md:table-cell">Aksi</th>
                       </tr>
                     </thead>
-                    <tbody class="text-center">
-                      <tr class="hover:bg-slate-50" v-for="data in dataOKR" :key="data.id">
-                        <td class="py-3">{{data.id}}</td>
-                        <td>{{data.total}}%</td>
-                        <td>{{data.kategori}}</td>
-                        <td>{{data.periode}}</td>
-                        <td>
+                    <tbody class="divide-y divide-gray-100">
+                      <tr class="text-left md:text-center bg-white block md:table-row" v-for="data in dataOKR" :key="data.id">
+                        <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="id">{{ data.id }}</td>
+                        <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="total">{{ data.total }}%</td>
+                        <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="kategori">{{ data.kategori }}</td>
+                        <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="periode">{{ data.periode }}</td>
+                        <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="status">
                           <t-tag 
                               v-show="data.status === 'Aktif'"
                               variant="success"
@@ -87,7 +90,7 @@
                               {{data.status}}
                           </t-tag>
                         </td>
-                        <td>
+                        <td class="p-3 text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="total">
                           <button class="bg-black rounded-md p-2">
                               <img src="~/assets/img/icons/edit.svg" />
                           </button>
@@ -98,19 +101,18 @@
                       </tr>
                     </tbody>
                   </table>
-                  </div>
-                  <div class="mt-8 mr-2 flex justify-end">
-                    <t-pagination
-                      class="responsivePagination"
-                      :value="1"
-                      :perPage="5"
-                      :limit="2"
-                      :totalItems="5"
-                    />
-                  </div>
+              </div>
+              <div class="mt-8 mr-2 flex justify-end">
+                <t-pagination
+                  class="responsivePagination"
+                  :value="1"
+                  :perPage="5"
+                  :limit="2"
+                  :totalItems="5"
+                />
               </div>
             </div>
-        <div v-else class="flex flex-col p-3">
+          <div v-else class="flex flex-col p-3">
           <div class="flex flex-row gap-2 mt-2 justify-between">
             <div class="flex flex-row">
             <div class="relative ml-4">
@@ -120,28 +122,28 @@
               <input 
                   type="search" 
                   id="default-search" 
-                  class="block w-full lg:w-[350px] border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-[15px] font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed" 
+                  class="block w-full lg:w-[350px] border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed" 
                   placeholder="Cari OKR"  
                   disabled>
                   </div>
               </div>
-              <div class="flex justify-end gap-3 mr-6">
-                  <div class="flex flex-row gap-1">
-                      <select 
-                        id="tahun" 
-                        class="font-semibold focus:outline-none text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed" 
-                        :disabled="true">
-                          <option value="">Tahun</option>
-                          <option value="2024">2024</option>
-                          <option value="2024">2023</option>
-                          <option value="2024">2022</option>
-                          <option value="2024">2021</option>
-                      </select>
-                      <img src="~/assets/img/icons/calendar.svg" class="object-contain w-[20px] h-full" alt=""/>
+              <div class="flex flex-col md:flex-row justify-end gap-3">
+                <div class="flex flex-col md:flex-row gap-1">
+                    <select 
+                      id="tahun" 
+                      class="font-semibold focus:outline-none hover:bg-[#E3E8FF] text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed" 
+                      :disabled="true">
+                        <option value="">Tahun</option>
+                        <option value="2024">2024</option>
+                        <option value="2024">2023</option>
+                        <option value="2024">2022</option>
+                        <option value="2024">2021</option>
+                    </select>
+                    <img src="~/assets/img/icons/calendar.svg" class="object-contain w-[20px] h-full" alt=""/>
                   </div>
                   <select 
                     id="posisi" 
-                    class="font-normal focus:outline-none text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed" 
+                    class="font-normal focus:outline-none text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed" 
                     :disabled="true">
                       <option value="">Posisi</option>
                       <option value="backend">Back-End Developer</option>
@@ -150,9 +152,9 @@
                       <option value="backend">Quality Assurance</option>
                       <option value="backend">UI/UX Designer</option>
                   </select>
-                  <select 
+                  <select
                     id="status" 
-                    class="font-semibold focus:outline-none text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed"
+                    class="font-semibold focus:outline-none hover:bg-[#E3E8FF] text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed"
                     :disabled="true">
                       <option value="">Semua Status</option>
                       <option value="aktif">Aktif</option>
@@ -162,7 +164,7 @@
                       <template v-slot:message>Tambah Data OKR</template>
                   </BlueButton>
               </div> 
-          </div>
+            </div>
               <div class="flex flex-col items-center justify-center my-8">
                   <img src="~/assets/img/no-data/nodata-okr.svg" alt="Not Found" class="mb-4 w-[139px] h-[139px] object-contain">
                   <p class="text-center text-sm">
@@ -191,9 +193,6 @@ export default {
         }
     },
     methods: {
-        changeStatus(category, newStatus) {
-            category.status = newStatus;
-        },
         tambahOKR() {
             this.showModal = true;
         },

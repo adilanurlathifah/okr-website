@@ -1,14 +1,14 @@
 <template>
     <div>
-        <div class="m-3">
-          <h1 class="text-2xl font-bold">
+        <div class="flex flex-col mb-4">
+          <h1 class="text-xl font-bold">
             Penilaian   
           </h1>
-          <h5 class="text-slate-400 mt-1">
-            Berikan nilai dan hasil pencapaian anggota tim anda 
-          </h5>
+          <p class="text-slate-400 mt-1 font-semibold text-sm text-left">
+            Berikan nilai dan hasil pencapaian anggota tim Anda 
+          </p>
         </div>
-        <VCard>
+        <VCard class="px-3 py-4">
             <div v-if="dataPenilaian.length > 0">
               <div class="flex flex-col md:flex-row gap-2 mt-2 md:px-2 px-4 justify-between">
                 <div class="flex flex-col md:flex-row">
@@ -19,14 +19,14 @@
                     <input 
                       type="search" 
                       id="default-search" 
-                      class="block w-full lg:w-[350px] border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-[15px] font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
+                      class="block w-full lg:w-[350px] border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
                       placeholder="Cari Anggota Tim" 
                       required>
                   </div>
                 </div>
                 <div class="flex flex-col md:flex-row justify-end gap-3">
                     <div class="flex flex-col md:flex-row gap-1">
-                      <select id="posisi" class="font-normal focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
+                      <select id="posisi" class="font-normal focus:outline-none border border-[#95999D] focus:border focus:border-[#B7C0D8] hover:bg-[#E3E8FF] text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2">
                           <option value="">Posisi</option>
                           <option value="backend">Back-End Developer</option>
                           <option value="backend">DevOps</option>
@@ -34,7 +34,7 @@
                           <option value="backend">Quality Assurance</option>
                           <option value="backend">UI/UX Designer</option>
                       </select>
-                      <select id="periode" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 mr-2">
+                      <select id="periode" class="font-semibold focus:outline-none border border-[#95999D] focus:border focus:border-[#B7C0D8] hover:bg-[#E3E8FF] text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2 mr-2">
                           <option value="">Pilih Periode</option>
                           <option value="januari">Januari</option>
                           <option value="februari">Februari</option>
@@ -57,46 +57,44 @@
                     <OKRModal :show="showModal" @close="showModal = false" />
                 </div> 
             </div>
-              <div class="container px-5 py-6 mb-10">
-                <div class="flex flex-row">
-                  <table class="table w-full h-auto responsive-table">
-                    <thead>
-                      <tr class="mb-2 text-center text-[#0C1662]">
-                        <th class="py-3">No</th>
-                        <th>PIC</th>
-                        <th>Karyawan</th>
-                        <th>Posisi</th>
-                        <th>Periode</th>
-                        <th>Total</th>
-                        <th>Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody class="text-center">
-                      <tr class="hover:bg-slate-50" v-for="data in dataPenilaian" :key="data.id">
-                        <td class="py-3">{{data.id}}</td>
-                        <td>{{data.pic}}</td>
-                        <td>{{data.karyawan}}</td>
-                        <td>{{data.posisi}}</td>
-                        <td>{{data.periode}}</td>
-                        <td>{{data.total}}%</td>
-                        <td>
-                          <button class="bg-black rounded-md p-2">
+            <div class="overflow-auto rounded-lg shadow mt-8">
+                <table class="w-full">
+                  <thead class="bg-gray-50 border-b-2 border-gray-100">
+                    <tr class="text-left text-[#0C1662] font-bold md:text-center">
+                      <th class="w-20 p-3 text-sm tracking-wide hidden md:table-cell">No.</th>
+                      <th class="w-20 p-3 text-sm tracking-wide hidden md:table-cell">PIC</th>
+                      <th class="w-24 p-3 text-sm tracking-wide hidden md:table-cell">Karyawan</th>
+                      <th class="w-24 p-3 text-sm tracking-wide hidden md:table-cell">Posisi</th>
+                      <th class="w-32 p-3 text-sm tracking-wide hidden md:table-cell">Periode</th>
+                      <th class="w-32 p-3 text-sm tracking-wide hidden md:table-cell">Total</th>
+                      <th class="w-32 p-3 text-sm tracking-wide hidden md:table-cell">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-100">
+                    <tr class="text-left md:text-center bg-white block md:table-row" v-for="data in dataPenilaian" :key="data.id">
+                      <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="id">{{ data.id }}</td>
+                      <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="kategori">{{ data.pic }}</td>
+                      <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="posisi">{{ data.karyawan }}</td>
+                      <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="kategori">{{ data.posisi }}</td>
+                      <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="posisi">{{ data.periode }}</td>
+                      <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="kategori">{{ data.total }}%</td>
+                      <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="posisi">
+                        <button class="bg-black rounded-md p-2">
                               <img src="~/assets/img/icons/edit.svg" />
                           </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  </div>
-                  <div class="mt-8 mr-2 flex justify-end">
-                    <t-pagination
-                      class="responsivePagination"
-                      :value="1"
-                      :perPage="5"
-                      :limit="2"
-                      :totalItems="5"
-                    />
-                  </div>
+                      </td>
+                   </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="mt-8 mr-2 flex justify-end">
+                <t-pagination
+                  class="responsivePagination"
+                  :value="1"
+                  :perPage="5"
+                  :limit="2"
+                  :totalItems="5"
+                />
               </div>
             </div>
         <div v-else class="flex flex-col p-3">
@@ -109,16 +107,16 @@
               <input 
                   type="search" 
                   id="default-search" 
-                  class="block w-full lg:w-[350px] border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-[15px] font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed" 
+                  class="block w-full lg:w-[350px] border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed" 
                   placeholder="Cari Anggota Tim"  
                   disabled>
                   </div>
               </div>
               <div class="flex justify-end gap-3 mr-6">
                   <div class="flex flex-row gap-1">
-                    <select 
+                    <select
                       id="posisi" 
-                      class="font-normal focus:outline-none text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed" 
+                      class="font-normal focus:outline-none text-sm hover:bg-[#E3E8FF] rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed" 
                       :disabled="true">
                         <option value="">Posisi</option>
                         <option value="backend">Back-End Developer</option>
@@ -129,7 +127,7 @@
                     </select>
                       <select 
                         id="tahun" 
-                        class="font-semibold focus:outline-none text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed" 
+                        class="font-semibold focus:outline-none hover:bg-[#E3E8FF] text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed" 
                         :disabled="true">
                           <option value="">Tahun</option>
                           <option value="2024">2024</option>
@@ -141,7 +139,7 @@
                   </div>
                   <select 
                     id="status" 
-                    class="font-semibold focus:outline-none text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed"
+                    class="font-semibold focus:outline-none hover:bg-[#E3E8FF] text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed"
                     :disabled="true">
                       <option value="">Semua Status</option>
                       <option value="aktif">Aktif</option>

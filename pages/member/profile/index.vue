@@ -48,7 +48,7 @@
                 <div class="flex flex-row justify-between items-center">
                     <h4 class="font-left font-semibold text-lg">Aktivitas Terakhir</h4>
                     <div class="flex flex-row items-center">
-                        <select id="periode" class="font-semibold focus:outline-none hover:bg-slate-100 text-xs rounded-lg block w-full lg:w-auto h-[45px] py-2 px-2 mr-2">
+                        <select id="periode" class="font-semibold focus:outline-none border border-[#95999D] focus:border focus:border-[#B7C0D8] hover:bg-[#E3E8FF] text-xs rounded-lg block w-full lg:w-auto h-[45px] py-2 px-2 mr-2">
                             <option value="">Periode</option>
                             <option value="januari">Januari</option>
                             <option value="februari">Februari</option>

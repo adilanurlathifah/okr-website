@@ -19,14 +19,14 @@
                     <input 
                       type="search" 
                       id="default-search" 
-                      class="block w-full lg:w-[350px] border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-[15px] font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
+                      class="block w-full lg:w-[350px] border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
                       placeholder="Cari Anggota Tim" 
                       required>
                   </div>
                 </div>
                 <div class="flex flex-col md:flex-row justify-end gap-3">
                     <div class="flex flex-col md:flex-row gap-1">
-                      <select id="posisi" class="font-normal focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
+                      <select id="posisi" class="font-normal focus:outline-none border border-[#95999D] focus:border focus:border-[#B7C0D8] hover:bg-[#E3E8FF] text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2">
                           <option value="">Posisi</option>
                           <option value="backend">Back-End Developer</option>
                           <option value="backend">DevOps</option>
@@ -34,7 +34,7 @@
                           <option value="backend">Quality Assurance</option>
                           <option value="backend">UI/UX Designer</option>
                       </select>
-                      <select id="periode" class="font-semibold focus:outline-none hover:bg-slate-100 text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 mr-2">
+                      <select id="periode" class="font-semibold focus:outline-none border border-[#95999D] focus:border focus:border-[#B7C0D8] hover:bg-[#E3E8FF] text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2 mr-2">
                           <option value="">Pilih Periode</option>
                           <option value="januari">Januari</option>
                           <option value="februari">Februari</option>
@@ -107,7 +107,7 @@
               <input 
                   type="search" 
                   id="default-search" 
-                  class="block w-full lg:w-[350px] border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-[15px] font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed" 
+                  class="block w-full lg:w-[350px] border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed" 
                   placeholder="Cari Anggota Tim"  
                   disabled>
                   </div>
@@ -116,7 +116,7 @@
                   <div class="flex flex-row gap-1">
                     <select 
                       id="posisi" 
-                      class="font-normal focus:outline-none text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed" 
+                      class="font-normal focus:outline-none text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed" 
                       :disabled="true">
                         <option value="">Posisi</option>
                         <option value="backend">Back-End Developer</option>
@@ -127,7 +127,7 @@
                     </select>
                       <select 
                         id="tahun" 
-                        class="font-semibold focus:outline-none text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed" 
+                        class="font-semibold focus:outline-none text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed" 
                         :disabled="true">
                           <option value="">Tahun</option>
                           <option value="2024">2024</option>
@@ -139,7 +139,7 @@
                   </div>
                   <select 
                     id="status" 
-                    class="font-semibold focus:outline-none text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed"
+                    class="font-semibold focus:outline-none text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2 cursor-not-allowed"
                     :disabled="true">
                       <option value="">Semua Status</option>
                       <option value="aktif">Aktif</option>
