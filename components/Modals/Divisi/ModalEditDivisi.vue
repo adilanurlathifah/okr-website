@@ -62,14 +62,13 @@ export default {
     components: { BlueButton, ModalMessage },
     data() {
         return {
-            name: "",
             showModal: false,
             submitted: false,
         }
     },
     props: {
         id: {
-            type: Number,
+            type: String,
             required: true
         },
         name: {
@@ -95,9 +94,9 @@ export default {
             return status
         },
         divisiName() {
-            this.$emit("divisi", this.name);
+            this.$emit("divisi", { id: this.id, name: this.name });
         },
-        sendDivisi() {
+        updateDivision() {
             this.submitted = true;
             if (this.isValid()) {
                 return this.divisiName()

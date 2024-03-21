@@ -75,6 +75,7 @@
                           <EditDivisi 
                             v-show="showEditDivisiModal" 
                             :name="selectedDivision.name"
+                            :id="selectedDivision.id" 
                             @divisi="updateDivision" 
                             @close-modal="closeEditDivisiModal"
                           />
@@ -195,90 +196,80 @@ export default {
           this.showEditDivisiModal = false;
       },
       async editDivision(id) {
-        // const division = this.divisions.find(div => div.id === id);
-        // if (division) {
-        //   this.selectedDivision = division;
-        //   this.showEditDivisiModal = true; 
-          
-        // } else {
-        //   alert(`Division with ID: ${id} not found.`);
-        // }
-
         try {
-          const tokenResponse = await this.$axios.$get('/api/admin/divisions/update');
-          const token = tokenResponse.data.token;
-
-          const division = this.divisions.find(div => div.id === id);
-          if (!division) {
-              throw new Error(`Division with ID: ${id} not found.`);
-          }
-
-          this.selectedDivision = { ...division, token };
-          this.showEditDivisiModal = true;
-        } catch (error) {
-          console.error('Error fetching the token or finding the division:', error);
-          alert(error.message);
-        }
-      },
-      async updateDivision() {
-        try {
-            const res = await this.$axios.post('/api/admin/divisions/update/', {
-                id: this.selectedDivision.id,
-                name: this.selectedDivision.name,
-                token: this.selectedDivision.token,
-            });
-
-            if (res.data.success) {
-                const index = this.divisions.findIndex(div => div.id === this.selectedDivision.id);
-                if (index !== -1) {
-                    this.divisions[index].name = this.selectedDivision.name;
-                }
-                this.showEditDivisiModal = false;
-            } else {
-                console.error('Failed to update the division');
+            const division = this.divisions.find(div => div.id === id);
+            if (!division) {
+                throw new Error(`Division with ID: ${id} not found.`);
             }
+            this.selectedDivision = division;
+            this.showEditDivisiModal = true;
         } catch (error) {
-            console.error(error);
+            console.error('Error fetching the division:', error);
             alert(error.message);
         }
       },
-      async fetchDivisions() {
-        try {
-            const response = await this.$axios.$get('/api/admin/divisions?limit&search&status=actived')
-            this.divisions = response.data.divisions.data.reverse();
-            this.totalItems = response.data.divisions.total; 
-        } catch (error) {
-            console.error('Failed to fetch divisions:', error);
-        }
-      },
-      handlePageChange(newPage) {
-        this.currentPage = newPage;
-        this.fetchDivisions();
-      },
-      changeStatus(data, newStatus) {
-          data.status = newStatus;
-      },
-      async handleDivisi(name) {
-        try {
-          const tokenResponse = await this.$axios.$get('/api/admin/divisions/create');
-          const token = tokenResponse.data.token;
-          const res = await this.$axios.post('api/admin/divisions/create', {
-              name: name,
-              token: token,
-          });
+      async updateDivision({ id, name }) {
+          try {
+              const tokenResponse = await this.$axios.$get('/api/admin/divisions/update');
+              const token = tokenResponse.data.token;
 
-          if (res.success) {
-            this.divisions.push({ 
-              name: name
-            });
-            this.showAddDivisiModal = false;
-          } else {
-            console.error('Failed to post new division');
+              const res = await this.$axios.post('/api/admin/divisions/update', {
+                  id: id,
+                  name: name,
+                  token: token,
+              });
+
+              if (res.data.success) {
+                  const index = this.divisions.findIndex(div => div.id === id);
+                  if (index !== -1) {
+                      this.divisions[index].name = name;
+                  }
+                  this.showEditDivisiModal = false;
+              } else {
+                  console.error('Failed to update the division');
+              }
+          } catch (error) {
+              console.error(error);
+              alert(error.message);
           }
-        } catch (error) {
-          console.error(error);
-          alert(error.message);
-        }
+      },
+      async fetchDivisions() {
+          try {
+              const response = await this.$axios.$get('/api/admin/divisions?limit&search&status=actived')
+              this.divisions = response.data.divisions.data.reverse();
+              this.totalItems = response.data.divisions.total; 
+          } catch (error) {
+              console.error('Failed to fetch divisions:', error);
+          }
+        },
+        handlePageChange(newPage) {
+          this.currentPage = newPage;
+          this.fetchDivisions();
+        },
+        changeStatus(data, newStatus) {
+            data.status = newStatus;
+        },
+        async handleDivisi(name) {
+          try {
+            const tokenResponse = await this.$axios.$get('/api/admin/divisions/create');
+            const token = tokenResponse.data.token;
+            const res = await this.$axios.post('api/admin/divisions/create', {
+                name: name,
+                token: token,
+            });
+
+            if (res.success) {
+              this.divisions.push({ 
+                name: name
+              });
+              this.showAddDivisiModal = false;
+            } else {
+              console.error('Failed to post new division');
+            }
+          } catch (error) {
+            console.error(error);
+            alert(error.message);
+          }
       },
     }
 }
