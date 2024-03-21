@@ -20,7 +20,8 @@
                           <img src="~/assets/img/icons/search.svg"/>
                       </div>
                       <input 
-                          type="search" 
+                          type="text" 
+                          v-model="search"
                           id="default-search" 
                           class="block w-full md:w-[350px] border border-slate-200 focus:outline-slate-200 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 rounded-lg bg-gray-50" 
                           placeholder="Cari Divisi">
@@ -51,8 +52,8 @@
                       </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                      <tr class="text-left md:text-center bg-white block md:table-row" v-for="(data, index) in displayedDivisions" :key="data.id">
-                        <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="id">{{ index + 1 }}</td>
+                      <tr class="text-left md:text-center bg-white block md:table-row" v-for="(data, index) in filteredDivision" :key="data.id">
+                        <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="id">{{ (currentPage - 1) * perPage + index + 1 }}</td>
                         <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="total">{{ data.name }}</td>
                         <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="status">
                           <t-tag 
@@ -73,11 +74,12 @@
                             <img src="~/assets/img/icons/edit.svg" />
                           </button>
                           <EditDivisi 
-                            v-show="showEditDivisiModal" 
-                            :name="selectedDivision.name"
-                            :id="selectedDivision.id" 
-                            @divisi="updateDivision" 
-                            @close-modal="closeEditDivisiModal"
+                              v-if="selectedDivision.id" 
+                              v-show="showEditDivisiModal" 
+                              :name="selectedDivision.name"
+                              :id="selectedDivision.id" 
+                              @divisi="updateDivision" 
+                              @close-modal="closeEditDivisiModal"
                           />
                           <button 
                               class="bg-red-700 rounded-md p-2"
@@ -98,7 +100,10 @@
                     </tbody>
                   </table>
               </div>
-              <div class="mt-8 mr-2 flex justify-end">
+              <div 
+                v-if="displayedDivisions.length > 0" 
+                class="mt-8 mr-2 flex justify-end"
+                >
                 <t-pagination
                   class="responsivePagination"
                   :value="currentPage"
@@ -161,6 +166,7 @@ export default {
     data() {
       return {
           name: "",
+          input: "",
           divisions: [],
           items: [],
           showAddDivisiModal: false,
@@ -180,6 +186,13 @@ export default {
     computed: {
       displayedDivisions() {
         return this.divisions;
+      },
+      filteredDivision() {
+        if (!this.search) {
+          return this.divisions;
+        }
+        const searchTerm = this.search.toLowerCase();
+        return this.divisions.filter(division => division.name.toLowerCase().includes(searchTerm));
       }
     },
     methods: {
@@ -195,82 +208,102 @@ export default {
       closeEditDivisiModal() {
           this.showEditDivisiModal = false;
       },
+      handlePageChange(newPage) {
+        this.currentPage = newPage;
+        this.fetchDivisions(newPage);
+      },
+      async fetchDivisions(page) {
+        try {
+          const response = await this.$axios.$get(`/api/admin/divisions?page=${page}&limit=${this.perPage}&search=${this.search}&status=${this.status}`);
+          this.divisions = response.data.divisions.data.reverse();
+          this.totalItems = response.data.divisions.total;
+          this.currentPage = response.data.divisions.current_page;
+          this.perPage = response.data.divisions.per_page; 
+        } catch (error) {
+          console.error('Failed to fetch divisions:', error);
+        }
+      },
+      async handleDivisi(name) {
+        try {
+          const tokenResponse = await this.$axios.$get('/api/admin/divisions/create');
+          const token = tokenResponse.data.token;
+          const res = await this.$axios.post('api/admin/divisions/create', {
+              name: name,
+              token: token,
+          });
+
+          if (res.success) {
+            this.divisions.push({ 
+              name: name
+            });
+            this.showAddDivisiModal = false;
+          } else {
+            console.error('Failed to post new division');
+          }
+        } catch (error) {
+          console.error(error);
+          alert(error.message);
+        }
+      },
       async editDivision(id) {
         try {
-            const division = this.divisions.find(div => div.id === id);
-            if (!division) {
-                throw new Error(`Division with ID: ${id} not found.`);
-            }
-            this.selectedDivision = division;
-            this.showEditDivisiModal = true;
+          const division = this.divisions.find(div => div.id === id);
+          if (!division) {
+              throw new Error(`Division with ID: ${id} not found.`);
+          }
+          this.selectedDivision = division;
+          this.showEditDivisiModal = true;
         } catch (error) {
-            console.error('Error fetching the division:', error);
-            alert(error.message);
+          console.error('Error fetching the division:', error);
+          alert(error.message);
         }
       },
       async updateDivision({ id, name }) {
-          try {
-              const tokenResponse = await this.$axios.$get('/api/admin/divisions/update');
-              const token = tokenResponse.data.token;
+        try {
+          const tokenResponse = await this.$axios.$get('/api/admin/divisions/update');
+          const token = tokenResponse.data.token;
 
-              const res = await this.$axios.post('/api/admin/divisions/update', {
-                  id: id,
-                  name: name,
-                  token: token,
-              });
+          const res = await this.$axios.post('/api/admin/divisions/update', {
+              id: id,
+              name: name,
+              token: token,
+          });
 
-              if (res.data.success) {
-                  const index = this.divisions.findIndex(div => div.id === id);
-                  if (index !== -1) {
-                      this.divisions[index].name = name;
-                  }
-                  this.showEditDivisiModal = false;
-              } else {
-                  console.error('Failed to update the division');
+          if (res.data.success) {
+              const index = this.divisions.findIndex(div => div.id === id);
+              if (index !== -1) {
+                  this.divisions[index].name = name;
               }
-          } catch (error) {
-              console.error(error);
-              alert(error.message);
+              this.showEditDivisiModal = false;
+          } else {
+              console.error('Failed to update the division');
           }
-      },
-      async fetchDivisions() {
-          try {
-              const response = await this.$axios.$get('/api/admin/divisions?limit&search&status=actived')
-              this.divisions = response.data.divisions.data.reverse();
-              this.totalItems = response.data.divisions.total; 
-          } catch (error) {
-              console.error('Failed to fetch divisions:', error);
-          }
-        },
-        handlePageChange(newPage) {
-          this.currentPage = newPage;
-          this.fetchDivisions();
-        },
-        changeStatus(data, newStatus) {
-            data.status = newStatus;
-        },
-        async handleDivisi(name) {
-          try {
-            const tokenResponse = await this.$axios.$get('/api/admin/divisions/create');
-            const token = tokenResponse.data.token;
-            const res = await this.$axios.post('api/admin/divisions/create', {
-                name: name,
-                token: token,
-            });
-
-            if (res.success) {
-              this.divisions.push({ 
-                name: name
-              });
-              this.showAddDivisiModal = false;
-            } else {
-              console.error('Failed to post new division');
-            }
-          } catch (error) {
+        } catch (error) {
             console.error(error);
             alert(error.message);
-          }
-      },
+        }
+    },
+    async changeStatus(data, newStatus) {
+      try {
+        const divisionId = data.id;
+        const tokenResponse = await this.$axios.$get('/api/admin/divisions/update-status');
+        const token = tokenResponse.data.token;
+
+        const res = await this.$axios.post('/api/admin/divisions/update-status', {
+          id: divisionId,
+          status: newStatus,
+          token: token,
+        });
+
+        if (res.data.success) {
+          data.status = newStatus;
+        } else {
+          console.error('Failed to update the division status');
+        }
+      } catch (error) {
+          console.error('Error updating division status:', error);
+      }
     }
+  }
 }
 </script>
