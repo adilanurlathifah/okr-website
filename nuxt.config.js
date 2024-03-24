@@ -20,7 +20,7 @@ export default {
   plugins: [
     { src: "~plugins/v-calendar.js", ssr: false },
     { src: "~/plugins/vue-tailwind.client.js" },
-    { src: "~/plugins/vue-sweetalert2.js" },
+    { src: "~/plugins/vue-sweetalert2.js" }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -41,6 +41,7 @@ export default {
     "@nuxtjs/auth-next",
     "@nuxtjs/tailwindcss",
     "vue-sweetalert2/nuxt",
+    "vue-toastification/nuxt",
   ],
   axios: {
     headers: {
