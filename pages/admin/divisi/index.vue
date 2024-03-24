@@ -8,10 +8,12 @@
             Anda bisa menambah ataupun mengaktifkan kategori divisi disini
           </p>
         </div>
-        <AlertBox 
-          :message="'Divisi Creative berhasil ditambahkan'" 
-          :isSuccess="isSuccess"/>
-        <VCard class="px-3 py-4">
+        <VCard class="vld-parent px-3 py-4">
+            <loading 
+              :active.sync="isLoading"
+              :can-cancel="false"
+              :is-full-page="false">
+            </loading>
             <div v-if="displayedDivisions.length > 0">
               <div class="flex flex-col md:flex-row gap-2 mt-2 md:px-2 px-4 justify-between items-center">
                 <div class="flex justify-center w-full md:w-auto">
@@ -29,10 +31,14 @@
                   </div>
                   <div class="flex flex-col md:flex-row justify-end gap-3 w-full md:w-auto">
                       <div class="flex flex-col md:flex-row gap-1 w-full md:w-auto">
-                        <select id="status" class="font-semibold focus:outline-none border border-[#95999D] focus:border focus:border-[#B7C0D8] hover:bg-[#E3E8FF] text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2">
+                        <select 
+                            v-model="selectedStatus"
+                            id="status" 
+                            class="font-semibold focus:outline-none border border-[#95999D] focus:border-[#B7C0D8] hover:bg-[#E3E8FF] hover:border-none text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2"
+                        >
                             <option value="">Semua Status</option>
-                            <option value="aktif">Aktif</option>
-                            <option value="nonaktif">Tidak Aktif</option>
+                            <option value="actived">Aktif</option>
+                            <option value="inactived">Tidak Aktif</option>
                         </select>
                       </div>
                       <BlueButton class="save-btn" @click="openAddDivisiModal" :showIcon="true">
@@ -52,7 +58,20 @@
                       </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                      <tr class="text-left md:text-center bg-white block md:table-row" v-for="(data, index) in filteredDivision" :key="data.id">
+                      <tr 
+                        v-if="filteredDivision.length === 0"
+                        class="text-left md:text-center bg-white block md:table-row"
+                      >
+                        <td colspan="4" class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell">
+                          Divisi tidak ditemukan
+                        </td>
+                      </tr>
+                      <tr 
+                        v-else
+                        class="text-left md:text-center bg-white block md:table-row" 
+                        v-for="(data, index) in filteredDivision" 
+                        :key="data.id"
+                      >
                         <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="id">{{ (currentPage - 1) * perPage + index + 1 }}</td>
                         <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="total">{{ data.name }}</td>
                         <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="status">
@@ -132,8 +151,8 @@
                       <div class="flex flex-col md:flex-row gap-1">
                         <select id="status" class="font-semibold cursor-not-allowed focus:outline-none hover:bg-slate-100 text-sm rounded-lg block w-full lg:w-auto h-[45px] p-2" :disabled="true">
                           <option value="">Semua Status</option>
-                          <option value="aktif">Aktif</option>
-                          <option value="nonaktif">Tidak Aktif</option>
+                          <option value="actived">Aktif</option>
+                          <option value="inactived">Tidak Aktif</option>
                       </select>
                     </div>
                     <BlueButton class="save-btn" @click="showAddDivisiModal = true" :showIcon="true">
@@ -147,8 +166,11 @@
                     Tambahkan Divisi baru yang ingin kamu gunakan untuk penilaian kinerjamu!<br/>Cek daftar Divisi di sini, aktifkan atau nonaktifkan sesuai kebutuhanmu.
                   </p>
               </div>
-            </div>
+          </div>
         </VCard>
+        <AlertBox 
+          :message="'Divisi Creative berhasil ditambahkan'" 
+          :isSuccess="isSuccess"/>
     </div>
 </template>
   
@@ -158,11 +180,13 @@ import BlueButton from '@/components/UI/BlueButton.vue';
 import AddDivisi from '@/components/Modals/Divisi/ModalAddDivisi.vue';
 import EditDivisi from '../../../components/Modals/Divisi/ModalEditDivisi.vue';
 import AlertBox from '@/components/UI/AlertBox.vue';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
     middleware: 'auth',
     layout: 'default-admin',
-    components: { VCard, BlueButton, AddDivisi, EditDivisi, AlertBox },
+    components: { VCard, BlueButton, AddDivisi, EditDivisi, AlertBox, Loading },
     data() {
       return {
           name: "",
@@ -177,7 +201,9 @@ export default {
           perPage: 10,
           totalItems: 0,
           search: "",
-          status: 'actived'
+          status: "actived",
+          selectedStatus: "",
+          isLoading: false
       }
     },
     mounted() {
@@ -188,11 +214,22 @@ export default {
         return this.divisions;
       },
       filteredDivision() {
-        if (!this.search) {
-          return this.divisions;
+        let filtered = this.divisions;
+
+        if (this.search) {
+          const searchTerm = this.search.toLowerCase();
+          filtered = filtered.filter(division => 
+            division.name.toLowerCase().includes(searchTerm)
+          );
         }
-        const searchTerm = this.search.toLowerCase();
-        return this.divisions.filter(division => division.name.toLowerCase().includes(searchTerm));
+
+        if (this.selectedStatus) {
+          filtered = filtered.filter(division => 
+            division.status === this.selectedStatus
+          );
+        }
+
+        return filtered;
       }
     },
     methods: {
@@ -213,12 +250,14 @@ export default {
         this.fetchDivisions(newPage);
       },
       async fetchDivisions(page) {
+        this.isLoading = true;
         try {
           const response = await this.$axios.$get(`/api/admin/divisions?page=${page}&limit=${this.perPage}&search=${this.search}&status=${this.status}`);
           this.divisions = response.data.divisions.data.reverse();
           this.totalItems = response.data.divisions.total;
           this.currentPage = response.data.divisions.current_page;
           this.perPage = response.data.divisions.per_page; 
+          this.isLoading = false;
         } catch (error) {
           console.error('Failed to fetch divisions:', error);
         }
@@ -232,7 +271,7 @@ export default {
               token: token,
           });
 
-          if (res.success) {
+          if (res.data.success) {
             this.divisions.push({ 
               name: name
             });
@@ -303,7 +342,7 @@ export default {
       } catch (error) {
           console.error('Error updating division status:', error);
       }
-    }
-  }
+    },
+  },
 }
 </script>

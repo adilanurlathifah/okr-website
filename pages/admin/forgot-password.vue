@@ -142,9 +142,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.vld-parent {
-    position: relative;
-}
-</style>

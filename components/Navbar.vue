@@ -46,14 +46,21 @@
                     </div>
                     <div slot-scope="{ hide, blurHandler }">
                         <button
-                            class="block w-full px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                            class="block w-full px-2 py-2 font-medium text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:font-semibold hover:bg-indigo-100 focus:outline-none focus:bg-gray-100"
                             role="menuitem"
                             @blur="blurHandler"
                         >
                             Profile Saya
                         </button>
                         <button
-                            class="block w-full px-4 py-2 text-sm leading-5 text-red-500 transition duration-150 ease-in-out border-t hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                            class="block w-full px-2 py-2 font-medium text-sm leading-5 text-gray-700 transition duration-150 ease-in-out border-t hover:font-semibold hover:bg-indigo-100 focus:outline-none focus:bg-gray-100"
+                            role="menuitem"
+                            @blur="blurHandler"
+                        >
+                            Ganti Password
+                        </button>
+                        <button
+                            class="block w-full px-2 py-2 font-medium text-sm leading-5 text-gray-700 transition duration-150 ease-in-out border-t hover:font-semibold hover:bg-indigo-100 focus:outline-none focus:bg-gray-100"
                             @click="userLogout"
                         >
                             Keluar

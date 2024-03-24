@@ -28,3 +28,7 @@ img {
 .font-display {
   font-family: Roboto, sans-serif;
 }
+
+.vld-parent {
+  position: relative;
+}

@@ -1,52 +1,71 @@
 <template>
-  <div class="p-5 h-screen bg-gray-100">
-     <h1 class="text-xl mb-2">Your orders</h1>
-     <!-- <div class="overflow-auto rounded-lg shadow">
-       <table class="w-full">
-         <thead class="bg-gray-50 border-b-2 border-gray-100">
-         <tr>
-           <th class="w-20 p-3 text-sm font-semibold tracking-wide text-left hidden md:table-cell">No.</th>
-           <th class="w-20 p-3 text-sm font-semibold tracking-wide text-left hidden md:table-cell">Nama</th>
-           <th class="w-24 p-3 text-sm font-semibold tracking-wide text-left hidden md:table-cell">Status</th>
-           <th class="w-24 p-3 text-sm font-semibold tracking-wide text-left hidden md:table-cell">Email</th>
-           <th class="w-32 p-3 text-sm font-semibold tracking-wide text-left hidden md:table-cell">Divisi</th>
-         </tr>
-         </thead>
-         <tbody class="divide-y divide-gray-100">
-         <tr class="bg-white block md:table-row" v-for="item in PIC" :key="item.id">
-           <td class="p-3 text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="No.">
-             <a href="#" class="font-bold text-blue-500 hover:underline">{{ item.id }}</a>
-           </td>
-           <td class="p-3 text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="Details">
-             {{ item.nama }}
-           </td>
-           <td class="p-3 text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="Status">
-             <span class="p-1.5 text-xs font-medium uppercase tracking-wider text-green-800 bg-green-200 rounded-lg bg-opacity-50">{{ item.status }}</span>
-           </td>
-           <td class="p-3 text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="Date">{{ item.email }}</td>
-           <td class="p-3 text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="Total">{{ item.divisi }}</td>
-         </tr>
-         </tbody>
-       </table>
-     </div> -->
+  <div>
+     <select v-model="selectedGender" @change="filterMember">
+       <option value="all">All</option>
+       <option value="male">Male</option>
+       <option value="female">Female</option>
+     </select>
+     <table>
+       <tr v-for="m in filteredMembers" :key="m.index">
+         <td>{{m.index}}</td>
+         <td>{{m.name}}</td>
+         <td>{{m.gender}}</td>
+       </tr>
+     </table>
   </div>
 </template>
  
 <script>
- import VCard from '../components/UI/VCard.vue';
- import { PIC } from '../models/PIC.js';
- import AlertBox from '../components/UI/AlertBox.vue';
- 
  export default {
-  name: 'IndexPage',
-  layout: 'default-admin',
-  middleware: 'auth',
-  components: { VCard, AlertBox },
+  layout: 'default-nuxt',
   data() {
      return {
-       PIC: PIC
-     };
+       member: 
+        [
+          {"index":0,"name":"Bonita Valenzuela","gender":"female"},
+          {"index":1,"name":"Chaney Reed","gender":"male"},
+          {"index":2,"name":"Sandoval Smith","gender":"male"},
+          {"index":3,"name":"Judy Schroeder","gender":"female"},
+          {"index":4,"name":"Thelma Cervantes","gender":"female"},
+          {"index":5,"name":"Zamora Huff","gender":"male"},
+          {"index":6,"name":"Alma Mullen","gender":"female"},
+          {"index":7,"name":"Aisha Pugh","gender":"female"},
+          {"index":8,"name":"Deana Clarke","gender":"female"},
+          {"index":9,"name":"Blankenship Contreras","gender":"male"},
+          {"index":10,"name":"Coleen Short","gender":"female"},
+          {"index":11,"name":"Owen Reilly","gender":"male"},
+          {"index":12,"name":"Tucker Conway","gender":"male"},
+          {"index":13,"name":"Nadine Wiggins","gender":"female"},
+          {"index":14,"name":"Tommie Austin","gender":"female"},
+          {"index":15,"name":"Luz Singleton","gender":"female"},
+          {"index":16,"name":"Myrna Carpenter","gender":"female"},
+          {"index":17,"name":"Schneider Blankenship","gender":"male"},
+          {"index":18,"name":"Heather Chapman","gender":"female"},
+          {"index":19,"name":"Katelyn Reese","gender":"female"},
+          {"index":20,"name":"Elvira Guzman","gender":"female"},
+          {"index":21,"name":"Gibbs Kinney","gender":"male"}
+        ],
+        selectedGender: 'all',
+        filteredMembers: []
+     }
+  },
+  methods: {
+    filterMember() {
+      if (this.selectedGender === 'all') {
+        this.filteredMembers = this.member;
+      } else {
+        this.filteredMembers = this.member.filter(e => e.gender === this.selectedGender);
+      }
+    }
+  },
+  watch: {
+      selectedGender(newVal) {
+        this.filterMember();
+      }
+  },
+  created() {
+      this.filteredMembers = this.member;
   }
- }
+};
 </script>
  
