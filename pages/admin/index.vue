@@ -119,7 +119,7 @@
               <div class="flex flex-col md:flex-row gap-2 mt-2 md:px-4 px-4 justify-between">
                 <div class="flex flex-col md:flex-row">
                 <div class="relative">
-                    <div class="absolute inset-y-0 flex items-center ps-3 pointer-events-none">
+                    <div class="absolute inset-y-0 flex items-center ps-3 pt-4 pointer-events-none">
                         <img src="~/assets/img/icons/search.svg"/>
                     </div>
                     <input 
@@ -130,9 +130,9 @@
                       required>
                   </div>
                 </div>
-                <div class="flex flex-col md:flex-row pt-8 justify-end gap-3">
+                <div class="flex flex-col md:flex-row  justify-end gap-3">
                     <div class="flex flex-row gap-1">
-                      <select id="posisi" class="font-normal focus:outline-none  border border-[#95999D] hover:bg-[#E3E8FF] focus border focus:border-[#B7C0D8] text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2">
+                      <select id="posisi" class="font-normal focus:outline-none  border border-[#95999D] hover:bg-[#E3E8FF] focus border focus:border-[#B7C0D8] text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 mr-2 mb-8">
                           <option value="">Posisi</option>
                           <option value="backend">Back-End Developer</option>
                           <option value="backend">DevOps</option>
@@ -140,7 +140,7 @@
                           <option value="backend">Quality Assurance</option>
                           <option value="backend">UI/UX Designer</option>
                       </select>
-                      <select id="periode" class="font-semibold focus:outline-none border border-[#95999D] hover:bg-[#E3E8FF] focus border focus:border-[#B7C0D8] text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 mr-2">
+                      <select id="periode" class="font-semibold focus:outline-none border border-[#95999D] hover:bg-[#E3E8FF] focus border focus:border-[#B7C0D8] text-[15px] rounded-lg block w-full lg:w-auto h-[45px] p-2 mr-2 mb-8">
                           <option value="">Periode</option>
                           <option value="januari">Januari</option>
                           <option value="februari">Februari</option>
@@ -155,7 +155,7 @@
                           <option value="november">November</option>
                           <option value="desember">Desember</option>
                       </select>
-                      <img src="~/assets/img/icons/calendar.svg" class="hidden md:block object-contain w-[20px] h-full" alt=""/>
+     
                 </div>
                 <t-dropdown variant="dark" text="Tambah">
                   <div class="py-1 rounded-md shadow-xs">
