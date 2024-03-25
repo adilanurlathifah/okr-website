@@ -94,7 +94,10 @@ export default {
             return status
         },
         divisiName() {
-            this.$emit("divisi", { id: this.id, name: this.name });
+            this.$emit("divisi", { 
+                id: this.id, 
+                name: this.name
+            });
         },
         updateDivision() {
             this.submitted = true;

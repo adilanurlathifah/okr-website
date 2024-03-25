@@ -43,7 +43,11 @@
                     <BlueButton class="save-btn" @click="openAddDivisiModal" :showIcon="true">
                       <template v-slot:message>Tambah Divisi</template>
                     </BlueButton>
-                    <AddDivisi v-show="showAddDivisiModal" @divisi="handleDivisi" @close-modal="closeAddDivisiModal"/>
+                    <AddDivisi 
+                      v-show="showAddDivisiModal" 
+                      @divisi="handleDivisi" 
+                      @close-modal="closeAddDivisiModal"
+                    />
                 </div> 
               </div>
               <div class="overflow-auto rounded-lg shadow mt-8">
@@ -342,9 +346,15 @@ export default {
 
       if (res.data.success) {
         data.status = newStatus;
-        this.$toast.success('Status divisi berhasil diperbaharui', {
-          position: 'top-right'
-        });
+        if (newStatus === 'actived') {
+            this.$toast.info('Divisi diaktifkan', {
+              position: 'top-right'
+            });
+        } else if (newStatus === 'inactived') {
+            this.$toast.info('Divisi dinonaktifkan', {
+              position: 'top-right'
+            });
+        }
       } else {
         this.$toast.error('Terjadi kesalahan saat memperbarui status. Silakan coba lagi.', {
           position: 'top-right'
