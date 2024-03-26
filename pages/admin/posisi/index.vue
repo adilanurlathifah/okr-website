@@ -94,7 +94,7 @@
                           </t-tag>
                         </td>
                       <td class="p-3 text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="total">
-                        <button class="bg-black rounded-md p-2" @click="editPosition(data.division.id)">
+                        <button class="bg-black rounded-md p-2" @click="editPosition(data.id)">
                           <img src="~/assets/img/icons/edit.svg" />
                         </button>
                         <EditPosisi 
@@ -102,6 +102,7 @@
                             v-show="showEditPosisiModal" 
                             :name="selectedPosition.name"
                             :id="selectedPosition.id" 
+                            :selectedDivision="selectedDivision.id"
                             @posisi="updatePosition" 
                             @close-modal="closeEditPosisiModal"
                         />
@@ -197,6 +198,7 @@ export default {
         showAddPosisiModal: false,
         showEditPosisiModal: false,
         selectedPosition: {},
+        selectedDivision: {},
         isSuccess: false,
         currentPage: 1,
         perPage: 10,
@@ -294,51 +296,52 @@ export default {
     },
     async editPosition(id) {
       try {
-        const position = this.positions.find(position => position.id === position);
-        if (!position) {
-            throw new Error(`Positions with ID: ${id} not found.`);
-        }
-        this.selectedPosition = position;
-        this.showEditPosisiModal = true;
-        this.selectedDivisionId = position.division_id; 
+            const position = this.positions.find(div => div.id === id);
+            if (!position) {
+                throw new Error(`Positions with ID: ${id} not found.`);
+            }
+            this.selectedPosition = position;
+            this.selectedDivision = { id: position.division.id, name: position.division.name };
+            this.showEditPosisiModal = true;
       } catch (error) {
-        this.$toast.error('Posisi dengan ID: ' + id + ' tidak ditemukan.', {
-          position: 'top-right'
-        });
+          this.$toast.error('Posisi dengan ID: ' + id + ' tidak ditemukan.', {
+            position: 'top-right'
+          });
       }
     },
     async updatePosition({ id, name, divisionId }) {
       try {
-        const tokenResponse = await this.$axios.$get('/api/admin/positions/update');
-        const token = tokenResponse.data.token;
+          const tokenResponse = await this.$axios.$get('/api/admin/positions/update');
+          const token = tokenResponse.data.token;
 
-        const res = await this.$axios.post('/api/admin/positions/update/', {
+          const res = await this.$axios.post('/api/admin/positions/update/', {
             id: id,
-            division_id: divisionId,
-            name: name,
+            name: name, 
+            division_id: divisionId, 
             token: token,
-        });
+          });
 
-        if (res.data.success) {
-            const index = this.positions.findIndex(div => div.id === id);
-            if (index !== -1) {
-                this.positions[index].name = name;
-            }
-            this.showEditPosisiModal = false;
-            this.$toast.success('Posisi berhasil diperbarui', {
+          if (res.data.success) {
+              const index = this.positions.findIndex(div => div.id === id);
+              if (index !== -1) {
+                  this.positions[index].name = name;
+                  this.positions[index].division_id = divisionId;
+              }
+              this.showEditPosisiModal = false;
+              this.$toast.success('Posisi berhasil diperbarui', {
+                position: 'top-right'
+              });
+          } else {
+            this.$toast.error('Posisi gagal diperbaharui', {
               position: 'top-right'
             });
-        } else {
-          this.$toast.error('Posisi gagal diperbaharui', {
+          }
+      } catch (error) {
+            this.$toast.error('Terjadi kesalahan saat memperbarui posisi. Silakan coba lagi.', {
             position: 'top-right'
           });
-        }
-      } catch (error) {
-          this.$toast.error('Terjadi kesalahan saat memperbarui divisi. Silakan coba lagi.', {
-          position: 'top-right'
-        });
       }
-  },
+      },
     async changeStatus(data, newStatus) {
       try {
         const positionId = data.id;

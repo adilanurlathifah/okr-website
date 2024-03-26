@@ -58,7 +58,6 @@ import BlueButton from '@/components/UI/BlueButton.vue';
 import ModalMessage from '@/components/UI/ModalMessage.vue';
 
 export default {
-    auth: false,
     components: { BlueButton, ModalMessage },
     data() {
         return {
