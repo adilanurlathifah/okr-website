@@ -1,22 +1,22 @@
 <template>
     <ModalMessage v-show="showModal" @close-modal="showModal = false">
-        <div class="flex flex-col" @submit.prevent="posisiName">
-        <h1 class="font-bold text-xl ml-6 text-left">Tambah Posisi</h1>
+        <div class="flex flex-col" @submit.prevent="categoryName">
+        <h1 class="font-bold text-xl ml-6 text-left">Tambah Kategori</h1>
         <div class="flex flex-col justify-center p-6">
-            <label class="font-semibold text-left text-base my-2">Posisi</label>
+            <label class="font-semibold text-left text-base my-2">Kategori</label>
             <input 
                 :class="{
-                    'is-valid': posisiFilled(),
-                    'is-invalid': (submitted && !posisiFilled()) || (submitted && !isValidLength()),
-                    'border-red-600': (submitted && !posisiFilled()) || (submitted && !isValidLength())
+                    'is-valid': categoryFilled(),
+                    'is-invalid': (submitted && !categoryFilled()) || (submitted && !isValidLength()),
+                    'border-red-600': (submitted && !categoryFilled()) || (submitted && !isValidLength())
                 }"
                 v-model="name"
                 type="input"
                 class="block w-full md:w-[350px] px-3 focus:outline-slate-300 h-[45px] text-sm font-medium text-gray-900 rounded-lg border border-slate-300" 
-                placeholder="Tambah Posisi Disini" 
+                placeholder="Tambah Kategori Disini" 
             >
             <small
-                v-if="submitted & !posisiFilled()"
+                v-if="submitted & !categoryFilled()"
                 class="text-xs text-red-700"
             > Nama posisi harus diisi
             </small>
@@ -27,15 +27,15 @@
             </small>
             <div class="flex flex-col justify-center mt-3">
                 <label class="font-semibold text-left text-base my-2">
-                    Pilih Divisi
+                    Pilih Posisi
                 </label>
                 <select 
-                    v-if="divisions.length" 
-                    v-model="selectedDivisionId" 
+                    v-if="positions.length" 
+                    v-model="selectedPositionId" 
                     id="divisi" 
                     class="block w-full md:w-[350px] border border-slate-300 focus:outline-slate-300 h-[45px] text-sm font-medium text-gray-900 rounded-lg">
-                    <option value="">Pilih Divisi</option>
-                    <option v-for="division in divisions" :key="division.id" :value="division.id">{{ division.name }}</option>
+                    <option value="">Pilih Posisi</option>
+                    <option v-for="position in positions" :key="position.id" :value="position.id">{{ position.name }}</option>
                 </select>
             </div>
         </div>
@@ -47,7 +47,7 @@
                     icon-color="#ffffff"
                     class="text-white"
                 >
-                    <template v-slot:message>Tambah Posisi</template>
+                    <template v-slot:message>Tambah Kategori</template>
                 </BlueButton>
                 <button 
                     type="button" 
@@ -69,17 +69,17 @@ export default {
     data() {
         return {
             name: "",
-            selectedDivisionId: "",
+            selectedPositionId: "",
             showModal: false,
             submitted: false,
-            divisions: [], 
+            positions: [], 
         }
     },
     created() {
-        this.fetchDivisions();
+        this.fetchPositions();
     },
     methods: {
-        posisiFilled(){
+        categoryFilled(){
             return this.name !== ''
         },
         isValidLength() {
@@ -87,30 +87,30 @@ export default {
         },
         isValid() {
             let status = true;
-            if (!this.posisiFilled() || !this.isValidLength()) {
+            if (!this.categoryFilled() || !this.isValidLength()) {
                 status = false;
             } 
             return status
         },
-        posisiName() {
-            this.$emit("posisi", this.name);
+        categoryName() {
+            this.$emit("kategori", this.name);
         },
         sendPosisi() {
             this.submitted = true;
             if (this.isValid()) {
-                this.$emit("posisi", {name: this.name, divisionId: this.selectedDivisionId});
+                this.$emit("kategori", {name: this.name, positionId: this.selectedPositionId});
             } else {
                     this.$toast.error('Posisi gagal ditambahkan', {
                     position: 'top-right'
                 });
             }
         },
-        async fetchDivisions() {
+        async fetchPositions() {
             try {
-                const response = await this.$axios.$get('/api/admin/divisions?limit&search&status=actived');
-                this.divisions = response.data.divisions.data;
+                const response = await this.$axios.$get(`/api/admin/positions?division_id&page&search&status`);
+                this.positions = response.data.divisions.data;
             } catch (error) {
-                console.error('Failed to fetch divisions:', error);
+                console.error('Failed to fetch positions:', error);
             }
         },
     }

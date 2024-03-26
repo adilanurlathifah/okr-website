@@ -43,6 +43,11 @@
                     <BlueButton class="save-btn" @click="openAddCategoriesModal" :showIcon="true">
                       <template v-slot:message>Buat Kategori</template>
                     </BlueButton>
+                    <AddCategory
+                      v-show="showAddCategoriesModal"
+                      @kategori="handleKategori"
+                      @close-modal="closeAddCategoriesModal"
+                    />
                 </div> 
               </div>
               <div class="overflow-auto rounded-lg shadow mt-8">
@@ -74,7 +79,7 @@
                     >
                       <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="id">{{ (currentPage - 1) * perPage + index + 1 }}</td>
                       <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="total">{{ data.name }}</td>
-                      <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="total">{{ data.division?.name }}</td>
+                      <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="total">{{ data.position?.name }}</td>
                       <td class="p-3 font-medium text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="status">
                         <t-tag 
                             v-show="data.status === 'actived'"
@@ -90,9 +95,18 @@
                         </t-tag>
                       </td>
                       <td class="p-3 text-sm text-gray-700 whitespace-nowrap block md:table-cell" data-title="total">
-                        <button class="bg-black rounded-md p-2">
+                        <button class="bg-black rounded-md p-2" @click="editCategory(data.id)">
                           <img src="~/assets/img/icons/edit.svg" />
                         </button>
+                        <EditCategory
+                          v-if="selectedCategory.id" 
+                          v-show="showEditCategoriesModal" 
+                          :name="selectedCategory.name"
+                          :id="selectedCategory.id" 
+                          :selectedPosition="selectedPosition.id"
+                          @kategori="updateCategory"
+                          @close-modal="closeEditCategoriesModal"
+                        />
                         <button 
                             class="bg-red-700 rounded-md p-2"
                             v-if="data.status === 'actived'"
@@ -141,8 +155,8 @@
                   <input 
                     type="search" 
                     id="default-search" 
-                    class="block w-full lg:w-[350px] cursor-not-allowed border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
-                    placeholder="Cari Divisi" 
+                    class="block w-full lg:w-[350px] cursor-not-allowed border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 rounded-lg bg-gray-50" 
+                    placeholder="Cari Kategori" 
                     :disabled="true">
                 </div>
               </div>
@@ -154,15 +168,16 @@
                         <option value="inactived">Tidak Aktif</option>
                     </select>
                   </div>
-                  <BlueButton class="save-btn" @click="showAddDivisiModal = true" :showIcon="true">
-                      <template v-slot:message>Tambah Divisi</template>
+                  <BlueButton class="save-btn" @click="showAddKategoriModal = true" :showIcon="true">
+                      <template v-slot:message>Buat Kategori</template>
                   </BlueButton>
+                  
               </div> 
           </div>
             <div class="flex flex-col items-center justify-center my-8">
-                <img src="~/assets/img/no-data/nodata-divisi.svg" alt="Not Found" class="mb-4 w-[139px] h-[139px] object-contain">
+                <img src="~/assets/img/no-data/nodata-category.svg" alt="Not Found" class="mb-4 w-[139px] h-[139px] object-contain">
                 <p class="text-center text-sm">
-                  Tambahkan Divisi baru yang ingin kamu gunakan untuk penilaian kinerjamu!<br/>Cek daftar Divisi di sini, aktifkan atau nonaktifkan sesuai kebutuhanmu.
+                  Tambahkan Kategori baru yang ingin kamu gunakan untuk penilaian kinerjamu!<br/>Cek daftar Kategori di sini, aktifkan atau nonaktifkan sesuai kebutuhanmu.
                 </p>
             </div>
         </div>
@@ -176,11 +191,13 @@ import VCard from '@/components/UI/VCard.vue';
 import BlueButton from '@/components/UI/BlueButton.vue';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import AddCategory from '../../../components/Modals/Kategori/ModalAddCategory.vue';
+import EditCategory from '../../../components/Modals/Kategori/ModalEditCategory.vue';
 
 export default {
   middleware: 'auth',
   layout: 'default-admin',
-  components: { VCard, BlueButton, Loading },
+  components: { VCard, BlueButton, Loading, AddCategory, EditCategory },
   data() {
     return {
         name: "",
@@ -189,7 +206,8 @@ export default {
         items: [],
         showAddCategoriesModal: false,
         showEditCategoriesModal: false,
-        // selectedDivision: {},
+        selectedCategory: {},
+        selectedPosition: {},
         isSuccess: false,
         currentPage: 1,
         perPage: 10,
@@ -197,7 +215,7 @@ export default {
         search: "",
         status: "actived",
         selectedStatus: "",
-        isLoading: false
+        isLoading: true
     }
   },
   mounted() {
@@ -255,115 +273,127 @@ export default {
         console.log('Failed to fetch categories:', error);
       }
     },
-  //   async handleDivisi(name) {
-  //     try {
-  //       const tokenResponse = await this.$axios.$get('/api/admin/divisions/create');
-  //       const token = tokenResponse.data.token;
-  //       const res = await this.$axios.post('api/admin/divisions/create', {
-  //           name: name,
-  //           token: token,
-  //       });
-  //       if (res.data.success) {
-  //         this.divisions.push({ 
-  //           name: name
-  //         });
-  //         this.showAddDivisiModal = false;
-  //         this.$toast.success('Divisi berhasil ditambahkan', {
-  //           position: 'top-right'
-  //         });
-  //       } else {
-  //         this.$toast.error('Divisi gagal ditambahkan', {
-  //           position: 'top-right'
-  //         });
-  //       }
-  //     } catch (error) {
-  //       this.$toast.error('Terjadi kesalahan saat menambah divisi. Silakan coba lagi.', {
-  //         position: 'top-right'
-  //       });
-  //     }
-  //   },
-  //   async editDivision(id) {
-  //     try {
-  //       const division = this.divisions.find(div => div.id === id);
-  //       if (!division) {
-  //           throw new Error(`Division with ID: ${id} not found.`);
-  //       }
-  //       this.selectedDivision = division;
-  //       this.showEditDivisiModal = true;
-  //     } catch (error) {
-  //       this.$toast.error('Divisi dengan ID: ' + id + ' tidak ditemukan.', {
-  //         position: 'top-right'
-  //       });
-  //     }
-  //   },
-  //   async updateDivision({ id, name }) {
-  //     try {
-  //       const tokenResponse = await this.$axios.$get('/api/admin/divisions/update');
-  //       const token = tokenResponse.data.token;
-
-  //       const res = await this.$axios.post('/api/admin/divisions/update', {
-  //           id: id,
-  //           name: name,
-  //           token: token,
-  //       });
-
-  //       if (res.data.success) {
-  //           const index = this.divisions.findIndex(div => div.id === id);
-  //           if (index !== -1) {
-  //               this.divisions[index].name = name;
-  //           }
-  //           this.showEditDivisiModal = false;
-  //           this.$toast.success('Divisi berhasil diperbarui', {
-  //             position: 'top-right'
-  //           });
-  //       } else {
-  //         this.$toast.error('Divisi gagal diperbaharui', {
-  //           position: 'top-right'
-  //         });
-  //       }
-  //     } catch (error) {
-  //         this.$toast.error('Terjadi kesalahan saat memperbarui divisi. Silakan coba lagi.', {
-  //         position: 'top-right'
-  //       });
-  //     }
-  // },
-  async changeStatus(data, newStatus) {
-    try {
-      const categoryId = data.id;
-      const tokenResponse = await this.$axios.$get('/api/admin/categories/update-status');
-      const token = tokenResponse.data.token;
-
-      const res = await this.$axios.post('/api/admin/categories/update-status', {
-        id: categoryId,
-        status: newStatus,
-        token: token,
-      });
-
-      if (res.data.success) {
-        data.status = newStatus;
-        if (newStatus === 'actived') {
-            this.$toast.info('Kategori diaktifkan', {
+    async handleKategori({name, positionId}) {
+        try {
+          const tokenResponse = await this.$axios.$get('/api/admin/categories/create');
+          const token = tokenResponse.data.token;
+          const res = await this.$axios.post('/api/admin/categories/create', {
+            name: name,
+            position_id: positionId,
+            token: token
+          });
+          if (res.data.success) {
+            this.categories.push({ 
+              name: name
+            });
+            this.showAddPosisiModal = false;
+            this.$toast.success('Kategori berhasil ditambahkan', {
               position: 'top-right'
             });
-        } else if (newStatus === 'inactived') {
-            this.$toast.info('Kategori dinonaktifkan', {
+            this.$router.push('/admin/posisi');
+          } else {
+            this.$toast.error('Kategori gagal ditambahkan', {
               position: 'top-right'
             });
-        }
-      } else {
-        this.$toast.error('Terjadi kesalahan saat memperbarui status. Silakan coba lagi.', {
-          position: 'top-right'
-        });
+          }
+        } catch (error) {
+          this.$toast.error('Terjadi kesalahan saat menambah Kategori. Silakan coba lagi.', {
+            position: 'top-right'
+          });
       }
-    } catch (error) {
-      if (error.response) {
-        this.$toast.error(error.response.data.message, {
-          position: 'top-right'
+    },
+    async editCategory(id) {
+      try {
+            const category = this.categories.find(div => div.id === id);
+            if (!category) {
+                throw new Error(`Positions with ID: ${id} not found.`);
+            }
+            this.selectedCategory = category;
+            this.selectedPosition = { 
+              id: category.position.id, 
+              name: category.position.name 
+            };
+            this.showEditCategoriesModal = true;
+      } catch (error) {
+          this.$toast.error('Kategori dengan ID: ' + id + ' tidak ditemukan.', {
+            position: 'top-right'
+          });
+      }
+    },
+    // async editCategory(id) {
+    //   alert(`Tes ID Kategori: ${id}`)
+    // },
+    async updateCategory({ id, name, positionId }) {
+      try {
+          const tokenResponse = await this.$axios.$get('/api/admin/categories/update');
+          const token = tokenResponse.data.token;
+
+          const res = await this.$axios.post('/api/admin/categories/update', {
+            id: id,
+            name: name, 
+            position_id: positionId, 
+            token: token,
+          });
+
+          // console.log(res);
+          if (res.data.success) {
+              const index = this.categories.findIndex(div => div.id === id);
+              if (index !== -1) {
+                  this.categories[index].name = name;
+                  this.categories[index].position_id = positionId;
+              }
+              this.showEditCategoriesModal = false;
+              this.$toast.success('Kategori berhasil diperbarui', {
+                position: 'top-right'
+              });
+          } else {
+            this.$toast.error('Kategori gagal diperbaharui', {
+              position: 'top-right'
+            });
+          }
+      } catch (error) {
+            this.$toast.error('Terjadi kesalahan saat memperbarui Kategori. Silakan coba lagi.', {
+            position: 'top-right'
+          });
+      }
+    },
+    async changeStatus(data, newStatus) {
+      try {
+        const categoryId = data.id;
+        const tokenResponse = await this.$axios.$get('/api/admin/categories/update-status');
+        const token = tokenResponse.data.token;
+
+        const res = await this.$axios.post('/api/admin/categories/update-status', {
+          id: categoryId,
+          status: newStatus,
+          token: token,
         });
-      } else 
-        this.$toast.error('Terjadi kesalahan saat memperbarui status. Silakan coba lagi.', {
-          position: 'top-right'
-        });
+
+        if (res.data.success) {
+          data.status = newStatus;
+          if (newStatus === 'actived') {
+              this.$toast.info('Kategori diaktifkan', {
+                position: 'top-right'
+              });
+          } else if (newStatus === 'inactived') {
+              this.$toast.info('Kategori dinonaktifkan', {
+                position: 'top-right'
+              });
+          }
+        } else {
+          this.$toast.error('Terjadi kesalahan saat memperbarui status. Silakan coba lagi.', {
+            position: 'top-right'
+          });
+        }
+      } catch (error) {
+        if (error.response) {
+          this.$toast.error(error.response.data.message, {
+            position: 'top-right'
+          });
+        } else 
+          this.$toast.error('Terjadi kesalahan saat memperbarui status. Silakan coba lagi.', {
+            position: 'top-right'
+          });
       }
     }
   },

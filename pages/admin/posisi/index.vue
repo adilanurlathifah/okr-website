@@ -147,7 +147,7 @@
                   <input 
                     type="search" 
                     id="default-search" 
-                    class="block w-full lg:w-[350px] cursor-not-allowed border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
+                    class="block w-full lg:w-[350px] cursor-not-allowed border border-slate-200 focus:outline-slate-300 h-[45px] p-2 ps-10 text-sm font-medium text-gray-900 rounded-lg bg-gray-50" 
                     placeholder="Cari posisi" 
                     :disabled="true">
                 </div>
@@ -206,7 +206,7 @@ export default {
         search: "",
         status: "actived",
         selectedStatus: "",
-        isLoading: false
+        isLoading: true
     }
   },
   mounted() {
@@ -344,7 +344,7 @@ export default {
             position: 'top-right'
           });
       }
-      },
+    },
     async changeStatus(data, newStatus) {
       try {
         const positionId = data.id;

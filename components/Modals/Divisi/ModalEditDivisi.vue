@@ -36,7 +36,7 @@
             <BlueButton 
               :button-color="false" 
               @click="updateDivision" 
-              :showIcon="true" 
+              :showIcon="false" 
               icon-color="#ffffff"
               class="text-white"
             >
