@@ -4,21 +4,23 @@
             <div class="flex flex-row justify-between p-3">
                 <h4 class="font-left font-semibold text-lg">Profil Admin</h4>
                 <div>
-                    <button class="flex flex-row bg-transparent gap-1 text-xs font-normal">
-                        <img src="~/assets/img/icons/edit-profile.svg" alt="" class="w-4" /> 
-                        Edit Profil
-                    </button>
+                    <nuxt-link to="/admin/profile/update-profile">
+                        <button class="flex flex-row bg-transparent gap-1 text-xs font-normal">
+                            <img src="~/assets/img/icons/edit-profile.svg" alt="" class="w-4" /> 
+                            Edit Profil
+                        </button>
+                    </nuxt-link>
                 </div>
             </div>
             <div class="flex flex-col md:flex-row justify center md:justify-start px-3 py-2 gap-10 lg:gap-[80px] lg:ml-3 items-center">
                 <img src="~/assets/img/profile.png" alt="" class="object-contain w-[100px]"/>
                 <div class="flex flex-col text-center md:text-left">
-                    <p class="text-xs font-normal">Nama Anggota Tim</p>
-                    <p class="text-xs font-semibold">John Doe</p>
+                    <p class="text-sm font-normal">Nama Anggota Tim</p>
+                    <p class="text-sm font-semibold">John Doe</p>
                 </div>
                 <div class="flex flex-col text-center md:text-left">
-                    <p class="text-xs font-normal">Email</p>
-                    <p class="text-xs font-semibold">johnapple@cyberarmy.id</p>
+                    <p class="text-sm font-normal">Email</p>
+                    <p class="text-sm font-semibold">johnapple@cyberarmy.id</p>
                 </div>
             </div>
         </VCard>
@@ -76,16 +78,16 @@
 
 <script>
 import VCard from '@/components/UI/VCard.vue';
-import { lastActivity } from '@/models/last-activity'
-    export default {
-        layout: 'default-admin',
-        components: { VCard },
-        data() {
-            return {
-                actHistory: lastActivity,
-            }
+export default {
+    layout: 'default-admin',
+    components: { VCard },
+    methods: {
+        async showProfile() {
+            const getProfile = await this.$axios.$get('/api/admin/profile');
+            
         }
     }
+}
 </script>
 
 <style>

@@ -69,7 +69,6 @@ export default {
     components: { BlueButton, ModalMessage },
     data() {
         return {
-            name: "",
             localSelectedDivision: this.selectedDivision,
             showModal: false,
             submitted: false,
@@ -86,8 +85,8 @@ export default {
             default: ''
         },
         selectedDivision: {
-            type: Object,
-            default: () => ({})
+            type: String,
+            required: true
         }
     },
     created() {

@@ -301,7 +301,10 @@ export default {
                 throw new Error(`Positions with ID: ${id} not found.`);
             }
             this.selectedPosition = position;
-            this.selectedDivision = { id: position.division.id, name: position.division.name };
+            this.selectedDivision = { 
+              id: position.division.id, 
+              name: position.division.name 
+            };
             this.showEditPosisiModal = true;
       } catch (error) {
           this.$toast.error('Posisi dengan ID: ' + id + ' tidak ditemukan.', {

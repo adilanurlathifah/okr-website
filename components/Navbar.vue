@@ -50,7 +50,9 @@
                             role="menuitem"
                             @blur="blurHandler"
                         >
+                        <nuxt-link to="/admin/profile">
                             Profile Saya
+                        </nuxt-link>
                         </button>
                         <button
                             class="block w-full px-2 py-2 font-medium text-sm leading-5 text-gray-700 transition duration-150 ease-in-out border-t hover:font-semibold hover:bg-indigo-100 focus:outline-none focus:bg-gray-100"
